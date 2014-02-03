@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!--
+This program is free software. It comes without any warranty, to
+the extent permitted by applicable law. You can redistribute it
+and/or modify it under the terms of the Do What The Fuck You Want
+To Public License, Version 2, as published by Sam Hocevar and
+reproduced below.
+
+DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+Version 2, December 2004
+
+Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+        0. You just DO WHAT THE FUCK YOU WANT TO.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Torrent-HowTo</title>
+		<link rel="icon" href="../static/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="../static/piracy.css" />
+		<meta name="robots" content="noindex,nofollow" />
+		<!-- Background pattern provided by subtlepatterns.com -->
+	</head>
+	<body>
+		<div id="center-wrap">
+			<div id="content-wrap">
+				<div id="content-title">
+					<h1>Krempel via Torrent</h1>
+					<h2>Eine Einleitung</h2>
+				</div>
+				<div id="content-main">
+					<div>
+						<h2>Intro</h2>
+						<div class="section-padding">
+							BitTorrent ist ein Protokoll, welches Dateien direkt zwischen den Teilnehmern austauscht,
+							auch schon w&auml;hrend die Dateien nur unvollst&auml;ndig vorhanden sind - wenn eine vollst&auml;ndige Kopie
+							im Netzwerk vorhanden ist, auch nachdem die Quelle aus dem Netzwerk verschwindet.
+							Das macht es besonders geeignet f&uuml;r die schnelle und verl&auml;ssliche Verteilung von gro&szlig;en (oder auch kleinen) Dateien.
+							<br/><br/>
+							Das Bereitstellen von eigenen Dateien gestaltet sich aufgrund einiger Eigenheiten etwas aufw&auml;ndiger
+							als bei manchen anderen Protokollen, weshalb dieses Dokument eine kurze Anleitung geben soll.
+							<br/><br/>
+							<strong>Begriffe</strong><br/>
+							Client - Software, die BitTorrent spricht<br/>
+							Tracker - Adressvermittlungsserver<br/>
+							Leecher - Client der eine Datei anfordert<br/>
+							Seeder - Client der eine Datei anbietet bzw. vollst&auml;ndig vorliegen hat
+						</div>
+					</div>
+
+					<div>
+						<h2>Protokoll</h2>
+						<em>Dieser Abschnitt geht etwas auf technische Details ein, kann aber prinzipiell &uuml;bersprungen werden</em>				
+						<div class="section-padding">
+							BitTorrent besteht trotz der grundlegenden dezentralen Verteilung aus zwei Komponenten,
+							einem Client (bspw. Halite, rTorrent, Deluge) und einem Server (bspw. opentracker, PeerTracker, traccoon).
+							Der Server dient jedoch nur zum Austauschen der Client-Adressen,
+							die eigentlichen Datenverbindungen bauen die Clients untereinander auf.
+							<br/><br/>
+							Um Dateien zu verteilen, muss auf zuerst offline eine .torrent-Datei, welche Informationen ueber die zu verbreitenden
+							Daten enthaelt, erzeugt werden. Enthalten ist, neben einigen Meta-Informationen wie der Dateigroesse, einem Kommentar
+							und der Tracker-URL als wichtigstes Element der sogenannte "info-Key", welcher Hashes der in einzelne Bl&ouml;cke zerlegten
+							Dateien enth&auml;lt. Der Inhalt einer .torrent-Datei laesst sich beispielsweise mit torrentinfo betrachten.
+							<br/><br/>
+							Eine .torrent-Datei laesst sich (semi-)eindeutig anhand des SHA1-Hashes ihres info-Keys identifizieren.
+							Die meisten Tracker halten daher eine Datenbank der Hashes vor, fuer welche sie Client-Adressen verteilen,
+							m&uuml;ssen also mindestens diese Information auch erhalten, bevor die Verteilung beginnen kann.
+							<br/><br/>
+							Als letzten Schritt muss nun die .torrent-Datei, welche meist nur wenige Kilobytes gro&szlig; ist, zu den
+							Zielcomputern transferiert werden (bspw. per HTTP).
+						</div>
+					</div>
+
+					<div>
+						<h2>Umfang eines Torrents</h2>
+						<div class="section-padding">
+							Ein Torrent sollte immer eine logische Einheit bilden - es ist zwar m&ouml;glich nur bestimmte Dateien eines
+							Torrents herunterzuladen, erzeugt aber Mehraufwand sowohl auf der Seederseite (l&auml;ngeres Hashen) als auch
+							auf der Leecherseite (mehr klicken).
+							<br/><br/>
+							Eine logische Einheit bilden bspw.<br/>
+							<ul>
+								<li>Ein Linux-CD-Image mit Beschreibung und passender Stickervorlage</li>
+								<li>Das Album deiner Band mitsamt unterschriebener Legalit&auml;tserkl&auml;rung</li>
+								<li>TPB:AFK in 1080P mit Subtitle-Files und allem drum und dran</li>
+								<li>Freie Software mitsamt dem PDF vom Wikibook dazu</li>
+							</ul>
+							<strong>Keine</strong> logische Einheit bilden aber<br/>
+							<ul>
+								<li>Deine komplette Festplatte</li>
+								<li>Unsortierte Mediendateien (ausser in bestimmten Faellen)</li>
+							</ul><br/>
+							Sollte dein spezieller Fall in keine der Kategorien passen, denk nach in welchen Granularitaeten du
+							deine Sachen am liebsten herunterladen wuerdest. Anders gesagt: Hirn anschalten. Oder halt jemand anderst fragen.
+						</div>
+					</div>
+
+					<div>
+						<h2>Torrentfile erzeugen</h2>
+						<div class="section-padding">
+							Jetzt kommt der spannende Teil. Um einen Torrent zu erzeugen, starten wir zun&auml;chst den Client unserer Wahl.
+							Dort schauen wir uns in den diversen Men&uuml;s nach einer Option um, die in etwa "Neuen Torrent erstellen" hei&szlig;t,
+							worauf wir vermutlich mit einem den folgenden Dialogen &auml;hnlichen Bild begr&uuml;&szlig;t werden.<br/>
+							
+							Torrents k&ouml;nnen immer jeweils entweder genau eine Datei oder genau einen Ordner (inkl. Unterordner) enthalten.
+							Es empfiehlt sich, die zu verteilenden Dateien in benannte Ordner zu stecken und diese dann Auszuw&auml;hlen.
+							In das &quot;Trackers&quot;-Feld kommen, wie sicher schon erraten, die Adressen der Tracker, die du bestimmt schon
+							auf irgendwelchen Wegen mitgeteilt bekommen hast. Einen deskriptiven Kommentar einzutragen ist immer gern gesehen.
+							Sollte der Dialog die Option &quot;Private torrent&quot; anbieten, empfiehlt es sich den Haken zu setzen (verhindert die Weitergabe
+							der internen Adressen an externe Tracker und Peers im Internet - nicht zwingend schlimm, aber etwas nutzlos).
+							Die Option &quot;Power seeding&quot; bzw. &quot;Super seeding&quot; sollte jedoch ausgeschaltet werden, diese bringt nur bei einer asymmetrischen
+							Anbindung an Peers Vorteile.
+							<br/><br/>
+							Der n&auml;chste Schritt des Clients wird nun eine, je nach Dateigr&ouml;&szlig;e variierend lange, Berechnung sein, in der
+							die Hashes der einzelnen Dateisplitter berechnet werden. Das Ergebnis dieses Prozesses ist dann die ersehnte .torrent-Datei.
+						</div>
+					</div>
+
+					<div>
+						<h2>Tracker</h2>
+						<div class="section-padding">
+						</div>
+					</div>
+
+					<div>
+						<h2>Seeden</h2>
+						<div class="section-padding">
+						</div>
+					</div>
+					
+				</div>
+				
+				<div id="content-foot">
+					#kitinfo Sharingparty Portal
+				</div>
+			</div>
+			<div style="text-align:right;padding:0.3em 1em 0 1em;">
+				<a href="http://www.kopimi.com/kopimi/"><img src="static/kopimi.png"/></a>
+				<a href="http://wtfpl.net/"><img src="static/wtfpl.png"/></a>
+			</div>
+		</div>
+	</body>
+</html>
