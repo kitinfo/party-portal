@@ -53,7 +53,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Client - Software, die BitTorrent spricht<br/>
 							Tracker - Adressvermittlungsserver<br/>
 							Leecher - Client der eine Datei anfordert<br/>
-							Seeder - Client der eine Datei anbietet bzw. vollst&auml;ndig vorliegen hat
+							Seeder - Client der eine Datei anbietet bzw. vollst&auml;ndig vorliegen hat<br/>
+							Peer - Verbindungspartner (Seeder oder Leecher)
 						</div>
 					</div>
 
@@ -62,21 +63,28 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<em>Dieser Abschnitt geht etwas auf technische Details ein, kann aber prinzipiell &uuml;bersprungen werden</em>				
 						<div class="section-padding">
 							BitTorrent besteht trotz der grundlegenden dezentralen Verteilung aus zwei Komponenten,
-							einem Client (bspw. Halite, rTorrent, Deluge) und einem Server (bspw. opentracker, PeerTracker, traccoon).
+							einem Client (bspw. 
+							<a href="http://www.binarynotions.com/halite-bittorrent-client/">Halite</a>,
+							<a href="http://libtorrent.rakshasa.no/">rTorrent</a>,
+							<a href="http://deluge-torrent.org/">Deluge</a>) 
+							und einem Server (bspw. 
+							<a href="http://erdgeist.org/arts/software/opentracker/">opentracker</a>, 
+							<a href="https://github.com/abique/hefur">hefur</a>, 
+							<a href="http://dev.cbcdn.com/traccoon/">traccoon</a>).
 							Der Server dient jedoch nur zum Austauschen der Client-Adressen,
 							die eigentlichen Datenverbindungen bauen die Clients untereinander auf.
 							<br/><br/>
-							Um Dateien zu verteilen, muss auf zuerst offline eine .torrent-Datei, welche Informationen ueber die zu verbreitenden
-							Daten enthaelt, erzeugt werden. Enthalten ist, neben einigen Meta-Informationen wie der Dateigroesse, einem Kommentar
+							Um Dateien zu verteilen, muss auf zuerst offline eine .torrent-Datei, welche Informationen &uuml;ber die zu verbreitenden
+							Daten enth&auml;lt, erzeugt werden. Enthalten ist, neben einigen Meta-Informationen wie der Dateigr&ouml;&szlig;e, einem Kommentar
 							und der Tracker-URL als wichtigstes Element der sogenannte "info-Key", welcher Hashes der in einzelne Bl&ouml;cke zerlegten
-							Dateien enth&auml;lt. Der Inhalt einer .torrent-Datei laesst sich beispielsweise mit torrentinfo betrachten.
+							Dateien enth&auml;lt. Der Inhalt einer .torrent-Datei l&auml;sst sich beispielsweise mit <a href="https://github.com/cbdevnet/traccoon/tree/master/torrentinfo">torrentinfo</a> betrachten.
 							<br/><br/>
 							Eine .torrent-Datei laesst sich (semi-)eindeutig anhand des SHA1-Hashes ihres info-Keys identifizieren.
-							Die meisten Tracker halten daher eine Datenbank der Hashes vor, fuer welche sie Client-Adressen verteilen,
+							Die meisten Tracker halten daher eine Datenbank der Hashes vor, f&uuml;r welche sie Client-Adressen verteilen,
 							m&uuml;ssen also mindestens diese Information auch erhalten, bevor die Verteilung beginnen kann.
 							<br/><br/>
-							Als letzten Schritt muss nun die .torrent-Datei, welche meist nur wenige Kilobytes gro&szlig; ist, zu den
-							Zielcomputern transferiert werden (bspw. per HTTP).
+							Als letzten Schritt muss nun die .torrent-Datei, welche meist nur wenige Kilobytes gro&szlig; ist, auf den/die Zielcomputer
+							geschoben werden (bspw. per HTTP).
 						</div>
 					</div>
 
@@ -99,8 +107,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>Deine komplette Festplatte</li>
 								<li>Unsortierte Mediendateien (ausser in bestimmten Faellen)</li>
 							</ul><br/>
-							Sollte dein spezieller Fall in keine der Kategorien passen, denk nach in welchen Granularitaeten du
-							deine Sachen am liebsten herunterladen wuerdest. Anders gesagt: Hirn anschalten. Oder halt jemand anderst fragen.
+							Sollte dein spezieller Fall in keine der Kategorien passen, denk nach in welchen Granularit&auml;ten du
+							deine Sachen am liebsten herunterladen w&uuml;rdest. Anders gesagt: Hirn anschalten. Oder halt jemand anderst fragen.
 						</div>
 					</div>
 
@@ -108,9 +116,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Torrentfile erzeugen</h2>
 						<div class="section-padding">
 							Jetzt kommt der spannende Teil. Um einen Torrent zu erzeugen, starten wir zun&auml;chst den Client unserer Wahl.
-							Dort schauen wir uns in den diversen Men&uuml;s nach einer Option um, die in etwa "Neuen Torrent erstellen" hei&szlig;t,
+							Dort schauen wir uns in den diversen Men&uuml;s nach einer Option um, die in etwa &quot;Neuen Torrent erstellen&quot; hei&szlig;t,
 							worauf wir vermutlich mit einem den folgenden Dialogen &auml;hnlichen Bild begr&uuml;&szlig;t werden.<br/>
-							
+							<img src="img/ut_newtorrent.jpg" style="height:20em;float:left;" alt="New Torrent Dialog" /><br/>
 							Torrents k&ouml;nnen immer jeweils entweder genau eine Datei oder genau einen Ordner (inkl. Unterordner) enthalten.
 							Es empfiehlt sich, die zu verteilenden Dateien in benannte Ordner zu stecken und diese dann Auszuw&auml;hlen.
 							In das &quot;Trackers&quot;-Feld kommen, wie sicher schon erraten, die Adressen der Tracker, die du bestimmt schon
@@ -128,24 +136,38 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Tracker</h2>
 						<div class="section-padding">
+							Sollte dein Client so schlau gewesen sein und gleich mit dem Seeden angefangen haben, wirst du sehr wahrscheinlich in
+							eine Fehlermeldung laufen - im Falle traccoons so etwas wie &quot;Hash not recognized&quot;. Der Tracker kennt den Torrent
+							noch nicht und nimmt daher keine Vermittlung vor. Dem wird mit dem Eintragen des Torrents im Trackerpanel abgeholfen.
+							Viele Tracker bieten auch eine Kategorisierung sowie einen Browser ihrer aktiven Torrents an.
 						</div>
 					</div>
 
 					<div>
 						<h2>Seeden</h2>
 						<div class="section-padding">
+							Sollte dein Client den erzeugten Torrent nicht automatisch hinzugef&uuml;gt haben oder aus mysteri&ouml;sen Gr&uuml;nden nicht
+							seeden, kann es helfen den Torrent hinzuzuf&uuml;gen als wollte man ihn herunterladen, und als Speicherort den Quellordner w&auml;hlen
+							(quasi die Originaldateien &uuml;berschreiben). Der Client wird das bemerken, &uuml;berpr&uuml;fen ob die Dateien vollst&auml;ndig sind und mit
+							dem seeden beginnen.
+							<br/><br/>
+							Sobald alle Teile deiner Dateien mindestens einmal im Netzwerk vorhanden sind (auch wenn jeder Peer nur einen Teil hat), ist es m&ouml;glich
+							die vollst&auml;ndige Datei auch ohne dein Zutun wieder zusammenzusetzen, du kannst den Torrent daher theoretisch l&ouml;schen - es ist allerdings
+							guter Stil seine Torrents m&ouml;glichst lange zu seeden, zumal das in einem lokalen Netzwerk sowieso problemlos ist.
+							<br/><br/>
+							Gratulation, du hast jetzt das Handwerkszeug zum Internetpirat!<br/><br/>
 						</div>
 					</div>
 					
 				</div>
 				
 				<div id="content-foot">
-					#kitinfo Sharingparty Portal
+					#kitinfo Sharingparty Portal - BitTorrent HowTo
 				</div>
 			</div>
 			<div style="text-align:right;padding:0.3em 1em 0 1em;">
-				<a href="http://www.kopimi.com/kopimi/"><img src="static/kopimi.png"/></a>
-				<a href="http://wtfpl.net/"><img src="static/wtfpl.png"/></a>
+				<a href="http://www.kopimi.com/kopimi/"><img src="../static/kopimi.png"/></a>
+				<a href="http://wtfpl.net/"><img src="../static/wtfpl.png"/></a>
 			</div>
 		</div>
 	</body>
