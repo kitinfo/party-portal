@@ -130,6 +130,28 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							<br/><br/>
 							Der n&auml;chste Schritt des Clients wird nun eine, je nach Dateigr&ouml;&szlig;e variierend lange, Berechnung sein, in der
 							die Hashes der einzelnen Dateisplitter berechnet werden. Das Ergebnis dieses Prozesses ist dann die ersehnte .torrent-Datei.
+
+
+							<br style="clear:left;" />
+							<br />
+							Unter Linux kann man sehr einfach Torrents mit "mktorrent" erzeugen.<br />
+							<code class="code-block">
+								mktorrent -a <annouce> -p <file or directory>
+							</code><br />
+							Erkl&auml;rung der Parameter:<br/>
+							-a Announce Adresse<br />
+							-p privater Torrent (wird nicht an andere Tracker weitergegeben)<br />
+							<br />
+							Hier noch ein Beispielskript, dass aus jedem Argument ein einzelnes Torrent erzeugt (-v 
+							setzt verbose Modus und Announce Server ist ein Beispiel-Server im privaten Netz).<br />
+							<code class="code-block">
+								#!/bin/bash<br />
+								for ARG in "$@"<br />
+								do<br />
+								&nbsp;&nbsp;mktorrent -a http://10.42.23.1:6969/announce -v -p $ARG<br />
+								done
+							</code><br />
+							Benutzung: <code>./myawesometorrentscript ~/music/*</code> erstellt zu jedem Ordner/jeder Datei in ~/music eine Torrent-Datei<br />
 						</div>
 					</div>
 
