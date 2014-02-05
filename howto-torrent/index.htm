@@ -149,9 +149,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								find ../Legales_Zeug/ -maxdepth 1 -type d | tail -n +2 | ./torrentify
 							</code><br/>
 							Erklärung der Parameter:<br />
-							<code>[find] -maxdepth</code> Nicht in Unterordner verzweigen<br/>
-							<code>[find] -type</code> Nur Ordner anzeigen<br/>
-							<code>[tail] -n</code> Ersten beiden Egebniszeilen des find-Befehls nicht zeigen (. und ..)<br/>
+							<code>[find] -maxdepth 1</code> Nicht in Unterordner verzweigen<br/>
+							<code>[find] -type d</code> Nur Ordner anzeigen<br/>
+							<code>[tail] -n +2</code> Ersten beiden Egebniszeilen des find-Befehls nicht zeigen (. und ..)<br/>
 						</div>
 					</div>
 
