@@ -96,6 +96,7 @@ h2{
 	padding:0.3em 1em 0 1em;
 }
 
-.code-block{
+code{
 	background-color: #DDD;
+	display:inline-block;
 }
