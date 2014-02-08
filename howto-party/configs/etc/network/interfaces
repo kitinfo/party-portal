@@ -1,0 +1,10 @@
+allow-hotplug eth0
+
+auto eth0.42
+iface eth0.42 inet static
+	address 10.42.23.1
+	netmask 255.255.255.0
+	vlan_raw_device eth0
+
+auto eth0.2
+iface eth0.2 inet dhcp

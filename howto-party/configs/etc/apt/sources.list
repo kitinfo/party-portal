@@ -1,0 +1,9 @@
+deb http://security.debian.org/ wheezy/updates main
+deb-src http://security.debian.org/ wheezy/updates main
+
+
+deb http://ftp2.de.debian.org/debian/ wheezy main contrib
+deb-src http://ftp2.de.debian.org/debian/ wheezy main contrib
+
+deb http://ftp2.de.debian.org/debian/ wheezy-updates main contrib
+deb-src http://ftp2.de.debian.org/debian/ wheezy-updates main contrib
