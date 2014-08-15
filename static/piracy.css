@@ -6,7 +6,7 @@ html{
 
 h1, h2, h3 {
 	margin:0.2em;
-	margin-top:0.4em;
+	margin-top:0.5em;
 	margin-left:0;
 }
 
@@ -38,6 +38,10 @@ h2{
 
 .section-padding{
 	padding-left:0.5em;
+}
+
+.subsection{
+	margin-left:0.5em;
 }
 
 #content-title h1 {
@@ -110,6 +114,7 @@ code{
 }
 
 .annotation {
+	margin-top:0.1em;
 	padding-left:1em;
 	font-size:90%;
 	font-style:italic;
