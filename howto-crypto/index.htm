@@ -126,10 +126,60 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 						</div>
 					</div>
+					
+					<div>
+						<h2>Was ist ein GPG-Key(pair)?</h2>
+						<div class="section-padding">
+							Eine der Grundeinheiten des GPG-&Ouml;kosystems ist der GPG-Key (bzw das
+							GPG-Keypair, bestehend aus einem privaten und einem &ouml;ffentlichen Key), 
+							der lose gesagt die Repr&auml;sentation eines Benutzers (bzw. eines Individuums) 
+							darstellt.
+							<br/>
+							Der Begriff des &quot;Key&quot; ist im PGP-Jargon doppeldeutig: Er kann sowohl
+							eine komplette Identit&auml;t meinen, als auch einen spezifischen kryptographischen
+							Schl&uuml;ssel. Ein &quot;Identit&auml;tsschl&uuml;ssel&quot; kann mehrere
+							&quot;Kryptographieschl&uuml;ssel&quot;, auch mit unterschiedlichen Anwendungsbereichen
+							(Signieren, Verschl&uuml;sseln) und Algorithmen (RSA, DSA, ElGamal) besitzen.
+							Die Bedeutungen sind sich sehr &auml;hnlich und haben unter anderem gemeinsam, 
+							dass sie durch einen sogenannten Fingerprint eindeutig identifiziert werden k&ouml;nnen.
+							<br/><br/>
+
+							Ein GPG-Key enth&auml;t mehrere Untereinheiten:
+
+
+							<h3>User-IDs (UIDs)</h3>
+							Ein Key kann viele verschiedene Identit&auml;ten eines einzelnen Benutzers
+							enthalten. Eine UID besteht aus einem Namen, einer Emailadresse und einem Kommentar.
+							Nur das Namensfeld ist zwingend erforderlich, die anderen beiden sind optional.
+							<br/><br/>
+							Im Normalfall hat ein Key eine UID f&uuml;r jede Emailadresse, auf der der Benutzer
+							verschl&uuml;sselte/signierte Kommunikation senden oder Empfangen m&ouml;chte.
+							<br/><br/>
+							UIDs werden besonders im Zusammenhang mit dem Web of Trust zu wichtigen Merkmalen
+							eines Keys.<br/> 
+							Sie haben jedoch keinen kryptographischen Einfluss auf den Schl&uuml;ssel,
+							sondern gelten nur als Identifikationsm&ouml;glichkeit (bedeutet: Es wird nicht
+							an eine bestimmte UID verschl&uuml;sselt, sondern an einen bestimmten Krypto-Key).
+							<br/><br/>
+							Der Besitzer eines Keys kann diesem w&auml;hrend seiner Lebenszeit unbegrenzt
+							viele UIDs hinzuf&uuml;gen und diese auch wieder &quot;zur&uuml;ckrufen&quot; (revoken).
+							Es ist zwar m&ouml;glich eine UID von einem Key zu l&ouml;schen, jedoch
+							werden Keys normalerweise additiv importiert - sprich, hat ein andere User
+							den &ouml;ffentlichen Schl&uuml;ssel in einer Version, in der die gel&ouml;schte UID
+							noch existiert, so wird diese beim Import der neuen Version nicht gel&ouml;scht,
+							sondern existiert weiter.
+
+							<h3>Subkeys</h3>
+							//TODO
+						</div>
+					</div>
 
 					<div>
-						<h2>Wie erzeuge ich einen Key?</h2>
+						<h2>Wie erzeuge ich mein Keypair?</h2>
+						<em>Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</em>				
+						<br/><br/>
 						<div class="section-padding">
+							
 						</div>
 					</div>
 
@@ -162,6 +212,18 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Manpower beim Bugs reporten, Bugs fixen oder User supporten) 
 							oder Lob freuen! Denkt dran, nur weil Software kostenlos ist,
 							ist sie noch lange nicht wertlos!
+							<br/><br/>
+							<ul>
+								<li>
+									<a href="https://www.gnupg.org/documentation/bts.html">GnuPG Bug Tracking System</a>
+								</li>
+								<li>
+									<a href="https://www.gnupg.org/donate/index.html">GnuPG Spenden-Informationen</a>
+								</li>
+								<li>
+									<a href="https://www.gnupg.org/documentation/index.html">GnuPG Dokumentation</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>

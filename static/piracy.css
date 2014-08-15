@@ -99,4 +99,6 @@ h2{
 code{
 	background-color: #DDD;
 	display:inline-block;
+	margin:0.2em;
+	padding:0.2em;
 }
