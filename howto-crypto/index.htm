@@ -53,8 +53,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 					<div>
 						<h2>Wie verschl&uuml;sseln?</h2>
-						<em>Dieser Abschnitt erz&auml;hlt nur ein paar Krypto-Hintergr&uuml;nde und kann prinzipiell &uuml;bersprungen werden.</em>				
-						<br/><br/>
+						<p class="annotation">Dieser Abschnitt erz&auml;hlt nur ein paar Krypto-Hintergr&uuml;nde und kann prinzipiell &uuml;bersprungen werden.</span>	
 						<div class="section-padding">
 							Grunds&auml;tzlich unterscheidet man 2 Typen der Kryptographie:
 							<h3>Symmetrische Kryptographie</h3>
@@ -191,10 +190,31 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 					<div>
 						<h2>Wie erzeuge ich mein Keypair?</h2>
-						<p>
-						<em>Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</em>
-						</p>
+						<p class="annotation">Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</p>
 						<div class="section-padding">
+							<p>
+								F&uuml;r die Erstellung eines guten&tm; Schl&uuml;sselpaares empfiehlt es
+								sich, eine &quot;sichere&quot; Maschine zu benutzen - also ein System,
+								bei dem man halbwegs sicher sein kann, dass es bisher &quot;&Uuml;berwachungsfrei&quot; 
+								ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.<br/>
+								Hierzu bieten sich einige M&ouml;glichkeiten:
+								<p class="section-padding">
+									<h3>Livesysteme</h3>
+									Es gibt einige Linux-Distributionen (oder auch BSD, falls jemand das lieber ist),
+									die Live-Medien anbieten - also bootbare USB-Sticks oder CDs
+									die schon alles n&ouml;tige f&uuml;r GPG an Bord haben - und im Idealfall
+									auch nicht mehr als das.
+									<h3>Ein Offline-/Airgapped-System</h3>
+									Bei dieser Methode verwendet man einen Computer (am sinnvollsten einen Laptop)
+									nur f&uuml;r diesen Zweck. Er wird einmal mit einem minimalen System (von einem
+									vertrauensw&uuml;rdigen Medium) installiert und darf niemals eine Internetverbindung
+									haben - daher der Name &quot;Airgap&quot;.
+								</p>
+								Generell empfiehlt es sich, auf dem System der Wahl m&ouml;glichst
+								wenige Prozesse aktiv zu haben, w&auml;hrend der Erzeugung keine
+								physische Netzwerkverbindung aktiv zu haben (Kabel ziehen!) und die
+								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick zu speichern.
+							</p>
 							<p>
 							Die Erstellung eines Keypairs ist recht simpel. Ein Aufruf von
 							<code>gpg --gen-key</code> führt interaktiv durch die Erstellung

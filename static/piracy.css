@@ -4,6 +4,12 @@ html{
 	background-image:url(background.png);
 }
 
+h1, h2, h3 {
+	margin:0.2em;
+	margin-top:0.4em;
+	margin-left:0;
+}
+
 h2{
 	color:#595959;
 }
@@ -101,4 +107,10 @@ code{
 	display:inline-block;
 	margin:0.2em;
 	padding:0.2em;
+}
+
+.annotation {
+	padding-left:1em;
+	font-size:90%;
+	font-style:italic;
 }
