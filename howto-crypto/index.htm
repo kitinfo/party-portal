@@ -64,7 +64,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Vorteile sind wohl die einfachere Umsetzung und Implementierung sowie
 							&quot;beweisbarere&quot; Sicherheit und bessere Performance.
 							<h3>Asymmetrische (aka Public-Key) Kryptographie</h3>
-							Der f&uuml;r &quot;dynamischere&quot; Kommunikation interessantere Teil.
+							Der f&uuml;r &quot;dynamischere&quot; Kommunikation interessantere Teil (und auch der
+							um den sich dieses Dokument haupts&auml;chlich dreht).
 							Hierbei existieren f&uuml;r einen Schl&uuml;ssel zwei Teile, n&auml;mlich ein 
 							privater (geheimer) Teil, der (im besten Fall) nur dem Besitzer bekannt ist und
 							ein &ouml;ffentlicher Teil, der jedem bekannt sein darf - und je nach System
@@ -80,10 +81,49 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Welche Tools brauche ich?</h2>
 						<div class="section-padding">
 							Hier unterscheiden sich die beiden grossen Betriebssysteme etwas.
+							Der Standard f&uuml;r Kommunikation mit asymmetrischer Kryptographie ist der von 
+							<a href="http://en.wikipedia.org/wiki/Phil_Zimmermann">Phil Zimmerman</a>
+							entwickelte <a href="http://www.ietf.org/rfc/rfc4880.txt">OpenPGP-Standard</a> 
+							und seine Implementationen <a href="http://pgp.com/">PGP</a> (das &quot;Original&quot;, 
+							gekauft von Symantec) und <a href="https://www.gnupg.org/">GnuPG</a> (Quelloffene, 
+							kostenlose Software (FOSS)).
 
 							<h3>Linux</h3>
+							Die meisten Distributionen haben GnuPG in ihren Paketarchiven,
+							am bequemsten ist es daher, den Paketmanager der Wahl dazu
+							zu bewegen, dieses zu installieren.
+							F&uuml;r Leute, die sich mit der Kommandozeile wohl f&uuml;hlen,
+							reicht hierbei die Version 1.x (Versionsreihe 1) vollkommen aus
+							(ist kleiner und hat weniger Abh&auml;ngigkeiten).
+							F&uuml;r nicht so text-feste Anwender empfiehlt sich die Versionsreihe
+							2.x, die sich mehr in die grafische Umgebung einf&uuml;gt (besonders
+							bei der Passworteingabe).
 
+							<br/><br/>
+							Beispiel Debian:<br/>
+							<code>
+								apt-get install gnupg
+							</code><br/>
+							bzw<br/>
+							<code>
+								apt-get install gnupg2
+							</code>
 							<h3>Windows</h3>
+							Man k&ouml;nnte sich nat&uuml;rlich die &quot;Originalversion&quot; von
+							PGP kaufen, aber hey, wer will schon Geld ausgeben ;)
+							Es gibt einen Windows-Port von GnuPG (gesponsert/betreut vom BSI (nicht sicher
+							was man davon halten soll...)), welches sich aber nur unter Schmerzen davon 
+							&uuml;berzeugen l&auml;sst, sein Interface auf Englisch auszugeben - wer allerdings 
+							gerne deutsche Oberfl&auml;chen hat, d&uuml;rfte hier gl&uuml;cklich werden.
+							Der Installer vom BSI zieht auch Kleopatra (einen grafischen Schl&uuml;sselmanager)
+							mit nach, der einige Techniken die in diesem Dokument sp&auml;ter beschrieben werden
+							(zb. Offline-Masterkeys) nicht oder nur teilweise unterst&uuml;tzt.
+							Es w&auml;re daher wohl (auch unter Sicherheitsaspekten) eine gute Idee,
+							zumindest die Key-Erzeugung mit einem (Live-)Linux-System vorzunehmen.
+							<br/><br/>
+							Es ist wohl auch m&ouml;glich GnuPG unter Cygwin zu bauen, wenn man
+							sich diesen Spass g&ouml;nnen will.
+
 						</div>
 					</div>
 
@@ -96,12 +136,14 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Wie verschl&uuml;ssele/entschl&uuml;ssele/signiere ich?</h2>
 						<div class="section-padding">
+							//gpg-agent
 						</div>
 					</div>
 
 					<div>
 						<h2>Wie funktioniert das Web of Trust?</h2>
 						<div class="section-padding">
+							//signingpolicy
 						</div>
 					</div>
 
@@ -112,6 +154,16 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						</div>
 					</div>
 					
+					<div>
+						<h2>Weiterf&uuml;hrendes & Links</h2>
+						<div class="section-padding">
+							Sollte euch eines der genannten Projekte sehr gut gefallen,
+							w&uuml;rden sie sich alle &uuml;ber Spenden (ob nun Geld oder
+							Manpower beim Bugs reporten, Bugs fixen oder User supporten) 
+							oder Lob freuen! Denkt dran, nur weil Software kostenlos ist,
+							ist sie noch lange nicht wertlos!
+						</div>
+					</div>
 				</div>
 				
 				<div id="content-foot">
