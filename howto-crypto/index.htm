@@ -46,7 +46,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Der Umgang mit Kryptographie - insbesondere asymmetrischer
 							Kryptographie - will gelernt sein, es kann immer mal passieren,
 							dass es aus irgendwelchen Gr&uuml;nden n&ouml;tig wird,
-							Informationen &uuml;ber einen gesichterten Kanal auszutauschen -
+							Informationen &uuml;ber einen gesicherten Kanal auszutauschen -
 							seien es Passw&ouml;rter, geheime Regierungsunterlagen oder Nacktbilder.
 						</div>
 					</div>
@@ -119,7 +119,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							was man davon halten soll...), welches sich aber nur unter Schmerzen davon 
 							&uuml;berzeugen l&auml;sst, sein Interface auf Englisch auszugeben - wer allerdings 
 							gerne deutsche Oberfl&auml;chen hat, d&uuml;rfte hier gl&uuml;cklich werden.
-							Der Installer vom BSI zieht auch Kleopatra (einen grafischen Schl&uuml;sselmanager)
+							Der Installer vom BSI zieht auch die Windows-Version von
+							<a href="http://www.kde.org/applications/utilities/kleopatra/">Kleopatra</a> 
+							(einen grafischen Schl&uuml;sselmanager aus dem KDE-Projekt)
 							mit nach, der einige Techniken die in diesem Dokument sp&auml;ter beschrieben werden
 							(zb. Offline-Masterkeys) nicht oder nur teilweise unterst&uuml;tzt.
 							Es w&auml;re daher wohl (auch unter Sicherheitsaspekten) eine gute Idee,
@@ -151,7 +153,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							dass sie durch einen sogenannten Fingerprint eindeutig identifiziert werden k&ouml;nnen.
 							</p>
 
-							Ein GPG-Key enth&auml;t mehrere Untereinheiten:
+							Ein GPG-Key enth&auml;lt mehrere Untereinheiten:
 
 							<h3>User-IDs (UIDs)</h3>
 							<p>
@@ -162,10 +164,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 							<p>
 							Im Normalfall hat ein Key eine UID f&uuml;r jede Emailadresse, auf der der Benutzer
-							verschl&uuml;sselte/signierte Kommunikation senden oder Empfangen m&ouml;chte.
-							</p>
-
-							<p>
+							verschl&uuml;sselte/signierte Kommunikation senden oder empfangen m&ouml;chte.
+                            </p>
 							UIDs werden besonders im Zusammenhang mit dem Web of Trust zu wichtigen Merkmalen
 							eines Keys.<br/> 
 							Sie haben jedoch keinen kryptographischen Einfluss auf den Schl&uuml;ssel,
@@ -177,7 +177,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Der Besitzer eines Keys kann diesem w&auml;hrend seiner Lebenszeit unbegrenzt
 							viele UIDs hinzuf&uuml;gen und diese auch wieder &quot;zur&uuml;ckrufen&quot; (revoken).
 							Es ist zwar m&ouml;glich eine UID von einem Key zu l&ouml;schen, jedoch
-							werden Keys normalerweise additiv importiert - sprich, hat ein andere User
+							werden Keys normalerweise additiv importiert - sprich, hat ein anderer User
 							den &ouml;ffentlichen Schl&uuml;ssel in einer Version, in der die gel&ouml;schte UID
 							noch existiert, so wird diese beim Import der neuen Version nicht gel&ouml;scht,
 							sondern existiert weiter.
