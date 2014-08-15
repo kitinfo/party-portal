@@ -239,6 +239,19 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick zu speichern.
 							</p>
 							<br/>
+							//Key Schema beschreiben
+							//How does PGP store keys / concept of keyrings
+							//Step numbering
+								//GPG_HOME setzen
+								//gen-key (sign+enc, no expiry, first uid (nonfinal), master passphrase)
+								//edit-key (setpref)
+								//add signing subkeys for devices
+								//generate revoke cert
+								//export full key to backup
+								//export subkey-secrets one by one
+								//import subkey-secrets on client devices
+								//reimport master key set on secure machine
+
 						</div>
 					</div>
 
@@ -246,6 +259,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Wie verschl&uuml;ssele/entschl&uuml;ssele/signiere ich?</h2>
 						<div class="section-padding">
 							//gpg-agent
+							//list-keys, etc
 						</div>
 					</div>
 
@@ -253,6 +267,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Wie funktioniert das Web of Trust?</h2>
 						<div class="section-padding">
 							//signingpolicy
+							//list sigs etc
 						</div>
 					</div>
 
@@ -279,9 +294,6 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									<a href="https://www.gnupg.org/donate/index.html">GnuPG Spenden-Informationen</a>
 								</li>
 								<li>
-									<a href="https://www.gnupg.org/documentation/index.html">GnuPG Dokumentation</a>
-								</li>
-								<li>
 									<a href="http://www.kde.org/community/donations/index.php#money">Kleopatra/KDE Spenden-Informationen</a>
 								</li>
 							</ul>
@@ -290,6 +302,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							der verschiedenen Projekte und einige Blogeintr&auml;ge und Mailinglisten-Posts,
 							f&uuml;r die wir den Autoren sehr dankbar sind:
 							<ul>
+								<li>
+									<a href="https://www.gnupg.org/documentation/index.html">GnuPG Dokumentation</a>
+								</li>
 								<li>
 									<a href="http://lists.gnupg.org/pipermail/gnupg-users/2002-August/014780.html">[gnupg-users] using various subkeys</a>
 								</li>
