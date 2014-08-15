@@ -192,6 +192,10 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<h3>Subkeys</h3>
 								//TODO
 							</p>
+							<p>
+								<h3>Photo IDs</h3>
+								//TODO
+							</p>
 						</div>
 					</div>
 
@@ -199,18 +203,30 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Wie erzeuge ich mein Keypair?</h2>
 						<p class="annotation">Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</p>
 						<div class="section-padding">
+							Diese Anleitung versucht, ein m&ouml;glichst sicheres Schema
+							f&uuml;r die Benutzung einer Identit&auml;t auch auf mehreren
+							Ger&auml;ten zu beschreiben. Ein einfacher Schl&uuml;ssel ohne weitere
+							Sicherheitsvorkehrungen kann mit dem Befehl
+							<code>
+								gpg --gen-key
+							</code>
+							interaktiv erzeugt werden.
+							
 							<p>
 								F&uuml;r die Erstellung eines guten&trade; Schl&uuml;sselpaares empfiehlt es
 								sich, eine &quot;sichere&quot; Maschine zu benutzen - also ein System,
-								bei dem man halbwegs sicher sein kann, dass es bisher &quot;&Uuml;berwachungsfrei&quot; 
-								ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.<br/>
+								bei dem man davon ausgehen kann, dass es bisher &quot;&Uuml;berwachungsfrei&quot; 
+								ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.
+							</p>
+
+							<p>
 								Hierzu bieten sich einige M&ouml;glichkeiten:
 								<p class="subsection">
 									<h3>Livesysteme</h3>
 									Es gibt einige Linux-Distributionen (oder auch BSD, falls jemand das lieber ist),
 									die Live-Medien anbieten - also bootbare USB-Sticks oder CDs
-									die schon alles n&ouml;tige f&uuml;r GPG an Bord haben - und im Idealfall
-									auch nicht mehr als das.
+									die schon alles n&ouml;tige f&uuml;r GPG an Bord haben (und im Idealfall
+									auch nicht mehr als das).
 									<h3>Ein Offline-/Airgapped-System</h3>
 									Bei dieser Methode verwendet man einen Computer (am sinnvollsten einen Laptop)
 									nur f&uuml;r diesen Zweck. Er wird einmal mit einem minimalen System (von einem
@@ -218,32 +234,11 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									haben - daher der Name &quot;Airgap&quot;.
 								</p>
 								Generell empfiehlt es sich, auf dem System der Wahl m&ouml;glichst
-								wenige Prozesse aktiv zu haben, w&auml;hrend der Erzeugung keine
-								physische Netzwerkverbindung aktiv zu haben (Kabel ziehen!) und die
+								wenige Prozesse aktiv zu haben (bspw. nur Textsystem), w&auml;hrend der Erzeugung keine
+								physische Netzwerkverbindung zu haben (Kabel ziehen!) und die
 								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick zu speichern.
 							</p>
 							<br/>
-							<p>
-							Die Erstellung eines Keypairs ist recht simpel. Ein Aufruf von
-							<code>gpg --gen-key</code> führt interaktiv durch die Erstellung
-							eines Schlüsselpaares. Hierbei sind die vorgegebenen Standardoptionen
-							vollkommen ausreichend; Wer paranoid ist, kann die Schlüsselgröße
-							jedoch gern auf <code>4096 bit</code> erhöhen.
-							</p>
-							
-							<p>
-							Ein fertig generierter Schlüssel wird im Verzeichnis
-							<code>~/.gnupg/</code> abgespeichert (mit <code>--homedir $dir</code>
-							kann ein alternativer Pfad angegeben werden). Bei der Verwaltung von subkeys
-							auf externen Speichermedien wird diese Option auch von Nutzen sein.
-							</p>
-
-							<p>
-							Mit der erfolgreichen Generierung eines Keypairs erstellt GnuPG
-							automatisch sowohl den privaten-, als auch den öffentlichen Keyring
-							(<code>pubring.gpg</code> und <code>secring.gpg</code>).
-							</p>
-							// TODO: generate subkeys n stuff
 						</div>
 					</div>
 
