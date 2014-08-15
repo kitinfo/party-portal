@@ -28,6 +28,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 		<link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="../static/piracy.css" />
 		<meta name="robots" content="noindex,nofollow" />
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<!-- Background pattern provided by subtlepatterns.com -->
 	</head>
 	<body>
@@ -41,9 +42,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Wieso verschl&uuml;sseln?</h2>
 						<div class="section-padding">
-							Weil mans kann? Naja nicht nur deswegen.
-							Der Umgang mit Kryptographie, insbesondere asymmetrischer
-							Kryptographie will gelernt sein, es kann immer mal passieren
+							Weil mans kann? Naja, nicht nur deswegen.
+							Der Umgang mit Kryptographie - insbesondere asymmetrischer
+							Kryptographie - will gelernt sein, es kann immer mal passieren,
 							dass es aus irgendwelchen Gr&uuml;nden n&ouml;tig wird,
 							Informationen &uuml;ber einen gesicherten Kanal auszutauschen -
 							seien es Passw&ouml;rter, geheime Regierungsunterlagen oder Nacktbilder.
@@ -89,17 +90,17 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							kostenlose Software (FOSS)).
 
 							<h3>Linux</h3>
-							Die meisten Distributionen haben GnuPG in ihren Paketarchiven,
+							Die meisten Distributionen haben GnuPG in ihren Paketarchiven;
 							am bequemsten ist es daher, den Paketmanager der Wahl dazu
-							zu bewegen, dieses zu installieren.
+							zu bewegen, GnuPG zu installieren.
 							F&uuml;r Leute, die sich mit der Kommandozeile wohl f&uuml;hlen,
 							reicht hierbei die Version 1.x (Versionsreihe 1) vollkommen aus
-							(ist kleiner und hat weniger Abh&auml;ngigkeiten).
+							. Diese ist kleiner und hat weniger Abh&auml;ngigkeiten.
 							F&uuml;r nicht so text-feste Anwender empfiehlt sich die Versionsreihe
 							2.x, die sich mehr in die grafische Umgebung einf&uuml;gt (besonders
 							bei der Passworteingabe).
 
-							<br/><br/>
+							<p>
 							Beispiel Debian:<br/>
 							<code>
 								apt-get install gnupg
@@ -108,11 +109,14 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							<code>
 								apt-get install gnupg2
 							</code>
+							</p>
+
 							<h3>Windows</h3>
+							<p>
 							Man k&ouml;nnte sich nat&uuml;rlich die &quot;Originalversion&quot; von
-							PGP kaufen, aber hey, wer will schon Geld ausgeben ;)
-							Es gibt einen Windows-Port von GnuPG (gesponsert/betreut vom BSI (nicht sicher
-							was man davon halten soll...)), welches sich aber nur unter Schmerzen davon 
+							PGP kaufen, aber hey, wer will schon Geld ausgeben? ;)
+							Es gibt einen Windows-Port von GnuPG (gesponsert/betreut vom BSI - nicht sicher
+							was man davon halten soll...), welches sich aber nur unter Schmerzen davon 
 							&uuml;berzeugen l&auml;sst, sein Interface auf Englisch auszugeben - wer allerdings 
 							gerne deutsche Oberfl&auml;chen hat, d&uuml;rfte hier gl&uuml;cklich werden.
 							Der Installer vom BSI zieht auch die Windows-Version von
@@ -122,7 +126,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							(zb. Offline-Masterkeys) nicht oder nur teilweise unterst&uuml;tzt.
 							Es w&auml;re daher wohl (auch unter Sicherheitsaspekten) eine gute Idee,
 							zumindest die Key-Erzeugung mit einem (Live-)Linux-System vorzunehmen.
-							<br/><br/>
+							</p>
+
 							Es ist wohl auch m&ouml;glich GnuPG unter Cygwin zu bauen, wenn man
 							sich diesen Spass g&ouml;nnen will.
 
@@ -132,11 +137,13 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Was ist ein GPG-Key(pair)?</h2>
 						<div class="section-padding">
+							<p>
 							Eine der Grundeinheiten des GPG-&Ouml;kosystems ist der GPG-Key (bzw das
 							GPG-Keypair, bestehend aus einem privaten und einem &ouml;ffentlichen Key), 
 							der lose gesagt die Repr&auml;sentation eines Benutzers (bzw. eines Individuums) 
 							darstellt.
-							<br/>
+							</p>
+							<p>
 							Der Begriff des &quot;Key&quot; ist im PGP-Jargon doppeldeutig: Er kann sowohl
 							eine komplette Identit&auml;t meinen, als auch einen spezifischen kryptographischen
 							Schl&uuml;ssel. Ein &quot;Identit&auml;tsschl&uuml;ssel&quot; kann mehrere
@@ -144,25 +151,28 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							(Signieren, Verschl&uuml;sseln) und Algorithmen (RSA, DSA, ElGamal) besitzen.
 							Die Bedeutungen sind sich sehr &auml;hnlich und haben unter anderem gemeinsam, 
 							dass sie durch einen sogenannten Fingerprint eindeutig identifiziert werden k&ouml;nnen.
-							<br/><br/>
+							</p>
 
 							Ein GPG-Key enth&auml;lt mehrere Untereinheiten:
 
-
 							<h3>User-IDs (UIDs)</h3>
+							<p>
 							Ein Key kann viele verschiedene Identit&auml;ten eines einzelnen Benutzers
 							enthalten. Eine UID besteht aus einem Namen, einer Emailadresse und einem Kommentar.
 							Nur das Namensfeld ist zwingend erforderlich, die anderen beiden sind optional.
-							<br/><br/>
+							</p>
+
+							<p>
 							Im Normalfall hat ein Key eine UID f&uuml;r jede Emailadresse, auf der der Benutzer
 							verschl&uuml;sselte/signierte Kommunikation senden oder empfangen m&ouml;chte.
-							<br/><br/>
 							UIDs werden besonders im Zusammenhang mit dem Web of Trust zu wichtigen Merkmalen
 							eines Keys.<br/> 
 							Sie haben jedoch keinen kryptographischen Einfluss auf den Schl&uuml;ssel,
 							sondern gelten nur als Identifikationsm&ouml;glichkeit (bedeutet: Es wird nicht
 							an eine bestimmte UID verschl&uuml;sselt, sondern an einen bestimmten Krypto-Key).
-							<br/><br/>
+							</p>
+
+							<p>
 							Der Besitzer eines Keys kann diesem w&auml;hrend seiner Lebenszeit unbegrenzt
 							viele UIDs hinzuf&uuml;gen und diese auch wieder &quot;zur&uuml;ckrufen&quot; (revoken).
 							Es ist zwar m&ouml;glich eine UID von einem Key zu l&ouml;schen, jedoch
@@ -170,6 +180,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							den &ouml;ffentlichen Schl&uuml;ssel in einer Version, in der die gel&ouml;schte UID
 							noch existiert, so wird diese beim Import der neuen Version nicht gel&ouml;scht,
 							sondern existiert weiter.
+							</p>
 
 							<h3>Subkeys</h3>
 							//TODO
@@ -178,10 +189,31 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 					<div>
 						<h2>Wie erzeuge ich mein Keypair?</h2>
-						<em>Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</em>				
-						<br/><br/>
+						<p>
+						<em>Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</em>
+						</p>
 						<div class="section-padding">
+							<p>
+							Die Erstellung eines Keypairs ist recht simpel. Ein Aufruf von
+							<code>gpg --gen-key</code> führt interaktiv durch die Erstellung
+							eines Schlüsselpaares. Hierbei sind die vorgegebenen Standardoptionen
+							vollkommen ausreichend; Wer paranoid ist, kann die Schlüsselgröße
+							jedoch gern auf <code>4096 bit</code> erhöhen.
+							</p>
 							
+							<p>
+							Ein fertig generierter Schlüssel wird im Verzeichnis
+							<code>~/.gnupg/</code> abgespeichert (mit <code>--homedir $dir</code>
+							kann ein alternativer Pfad angegeben werden). Bei der Verwaltung von subkeys
+							auf externen Speichermedien wird diese Option auch von Nutzen sein.
+							</p>
+
+							<p>
+							Mit der erfolgreichen Generierung eines Keypairs erstellt GnuPG
+							automatisch sowohl den privaten-, als auch den öffentlichen Keyring
+							(<code>pubring.gpg</code> und <code>secring.gpg</code>).
+							</p>
+							// TODO: generate subkeys n stuff
 						</div>
 					</div>
 
@@ -207,7 +239,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					</div>
 					
 					<div>
-						<h2>Weiterf&uuml;hrendes & Links</h2>
+						<h2>Weiterf&uuml;hrendes &amp; Links</h2>
 						<div class="section-padding">
 							Sollte euch eines der genannten Projekte sehr gut gefallen,
 							w&uuml;rden sie sich alle &uuml;ber Spenden (ob nun Geld oder
@@ -238,8 +270,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 				</div>
 			</div>
 			<div style="text-align:right;padding:0.3em 1em 0 1em;">
-				<a href="http://www.kopimi.com/kopimi/"><img src="../static/kopimi.png"/></a>
-				<a href="http://wtfpl.net/"><img src="../static/wtfpl.png"/></a>
+				<a href="http://www.kopimi.com/kopimi/"><img src="../static/kopimi.png" alt="kopimi" /></a>
+				<a href="http://wtfpl.net/"><img src="../static/wtfpl.png" alt="wtfpl" /></a>
 			</div>
 		</div>
 	</body>
