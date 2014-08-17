@@ -190,11 +190,26 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 							<p>
 								<h3>Subkeys</h3>
-								//TODO
+								Ein Schl&uuml;sselpaar kann beliebig viele &quot;Unterschl&uuml;ssel&quot; besitzen - 
+								mit jeweils eigenen Schl&uuml;sselalgorithmen, Ablaufdaten, Schl&uuml;ssell&auml;ngen
+								und Fingerprints.
+								Trotzdem sind diese Subkeys mathematisch Teil des &uuml;bergeordneten Schl&uuml;ssels.
+								Ihre privaten Teile k&ouml;nnen jedoch unabh&auml;ngig von denen des Hauptschl&uuml;ssels 
+								exportiert und verwendet werden, wodurch sich einige Verbesserungen in der Benutzbarkeit 
+								ergeben.
+
+								Genau wie UIDs kann der Besitzer eines Schl&uuml;ssels diesem w&auml;hrend seiner Lebenszeit
+								beliebig viele Subkeys hinzuf&uuml;gen und diese auch wieder zur&uuml;ckrufen.
+
+								Anders als UIDs sind Subkeys jedoch kryptographisch relevant:
+								Sie besitzen einen eigenen eindeutigen Fingerprint und an sie kann speziell verschl&uuml;sselt
+								(Encryption-Subkeys) oder mit ihnen signiert (Signing-Subkeys) werden.
 							</p>
 							<p>
 								<h3>Photo IDs</h3>
-								//TODO
+								Es ist auch m&ouml;glich, kleinere Bilddateien an Schl&uuml;ssel anzuh&auml;ngen.
+								Diese koennen bspw. als weiteres Verifikationsmedium f&uuml;r die Identit&auml;t eines 
+								Schl&uuml;sselinhabers genutzt werden.
 							</p>
 						</div>
 					</div>
@@ -215,7 +230,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							<p>
 								F&uuml;r die Erstellung eines guten&trade; Schl&uuml;sselpaares empfiehlt es
 								sich, eine &quot;sichere&quot; Maschine zu benutzen - also ein System,
-								bei dem man davon ausgehen kann, dass es bisher &quot;&Uuml;berwachungsfrei&quot; 
+								bei dem man davon ausgehen kann, dass es bisher &quot;&uuml;berwachungsfrei&quot; 
 								ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.
 							</p>
 
@@ -318,18 +333,45 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Als Passphrase sollten wir hier eine m&ouml;glichst
 										komplexe Zeichenfolge aussuchen. Die Ger&auml;tespezifischen
 										Schl&uuml;ssel werden eigene Passphrasen bekommen.
+										Am Ende best&auml;tigen wir mit <code>&gt; save</code>,
+										dass wir den neuen Schl&uuml;ssel speichern wollen.
 									</li>
 									<li>
 										<h3>Pr&auml;ferierte Algorithmen &amp; weitere UIDs</h3>
+										Jetzt werden wir den gerade erstellten Schl&uuml;ssel bearbeiten,
+										um einige Einstellungen vorzunehmen und weitere UIDs
+										hinzuzuf&uuml;gen.<br/>
+										<code>user@box:~$ gpg --edit-key &lt;identifier&gt;</code><br/>
+										&lt;identifier&gt; kann hierbei sein:
+										<ul>
+											<li>(Teil-)Fingerprint</li>
+											<li>Teile der UID</li>
+										</ul>
+										GPG pr&auml;sentiert uns nun sein interaktives Interface.
+										Wir f&uuml;hren darin folgenden Befehl aus, um die bevorzugten
+										Algorithmen etwas zu st&auml;rken:<br/>
+										<code>gpg&gt; setpref SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code>
+										<br/>
+										GPG fragt uns nach der Passphrase, welche wir uns nat&uuml;rlich
+										mittlerweile auswendig gemerkt haben ;).
+
+										Danach k&ouml;nnen auf der GPG-Kommandozeile mit<br/>
+										<code>gpg&gt; adduid</code><br/>
+										weitere UIDs interaktiv hinzugef&uuml;gt werden.
+										Abschliessend speichern wir unsere &Auml;nderungen mit einem<br/>
+										<code>gpg&gt; save</code>
+
 									</li>
 									<li>
 										<h3>Subkeys hinzuf&uuml;gen</h3>
+										//lifetime
 									</li>
 									<li>
 										<h3>Revocation Certificate generieren</h3>
 									</li>
 									<li>
 										<h3>Komplettes Master-Keypair exportieren</h3>
+										//public / private parts
 									</li>
 									<li>
 										<h3>Subkeys einzeln exportieren und Passphrasen &auml;ndern</h3>
@@ -340,6 +382,12 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								</ol>
 								
 								Damit haben wir uns ein ziemlich gutes&trade; Keypair gebaut!
+								Wenn wir den &ouml;ffentlichen Teil des Master-Keys jetzt auf einer
+								&quot;unsicheren&quot; Maschine mit <code>gpg --import &lt;file.asc&gt;</code>
+								wieder importieren und mit <code>gpg --send-keys &lt;fingerprint&gt;</code>
+								an einen Keyserver schicken, k&ouml;nnen uns auch andere Menschen
+								finden. Alternativ (oder auch zus&auml;tzlich) kann man nat&uuml;rlich 
+								den &ouml;ffentlichen Teil auch auf seiner Homepage zum Download anbieten.
 							</p>
 						</div>
 					</div>
@@ -364,6 +412,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Was tun, wenn der Schl&uuml;ssel kompromittiert ist?</h2>
 						<div class="section-padding">
+							//revcert importieren und senden, etc
 						</div>
 					</div>
 					
