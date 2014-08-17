@@ -201,7 +201,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 					<div>
 						<h2>Wie erzeuge ich mein Keypair?</h2>
-						<p class="annotation">Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG beschr&auml;nken.</p>
+						<p class="annotation">Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG unter Linux-Systemen beschr&auml;nken.</p>
 						<div class="section-padding">
 							Diese Anleitung versucht, ein m&ouml;glichst sicheres Schema
 							f&uuml;r die Benutzung einer Identit&auml;t auch auf mehreren
@@ -238,20 +238,109 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								physische Netzwerkverbindung zu haben (Kabel ziehen!) und die
 								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick zu speichern.
 							</p>
-							<br/>
-							//Key Schema beschreiben
-							//How does PGP store keys / concept of keyrings
-							//Step numbering
-								//GPG_HOME setzen
-								//gen-key (sign+enc, no expiry, first uid (nonfinal), master passphrase)
-								//edit-key (setpref)
-								//add signing subkeys for devices
-								//generate revoke cert
-								//export full key to backup
-								//export subkey-secrets one by one
-								//import subkey-secrets on client devices
-								//reimport master key set on secure machine
+							<p>
+								Wir werden in dieser Anleitung ein Keypair mit mehreren
+								Subkeys (siehe oben) erzeugen - in unserem Fall mit einem
+								Encryption-Subkey (wer sich der Implikationen bewusst ist
+								kann auch gerne mehrere Encryption-Subkeys erzeugen) sowie
+								einem Signing-Subkey pro Ger&auml;t auf dem der Schl&uuml;ssel
+								verwendet werden soll.
+								<br/><br/>
 
+								Die einzelnen Ger&auml;te sollen dabei auch nur die geheimen
+								Teile ihrer jeweiligen Subkeys besitzen, sodass selbst
+								wenn eines der Ger&auml;te kompromittiert (verloren, &uuml;berwacht,
+								gel&ouml;scht) wird, der Besitzer mit dem Master-Keypair problemlos 
+								nur diesen einzelnen Subkey revoken kann und dabei nicht automatisch
+								das gesamte Keypair verliert oder die Sicherheit der anderen
+								Ger&auml;te aufs Spiel setzt.
+							</p>
+
+							<p>
+								Jetzt noch einige Worte dazu, wie GPG Schl&uuml;ssel auf
+								der Platte verwaltet:<br/>
+								Als default benutzt GPG Verzeichnis <code>~/.gnupg/</code> 
+								im Home-Ordner des jeweiligen Benutzers, um alle Daten zu
+								speichern. Schl&uuml;ssel werden dabei in sogenannten
+								&quot;Keyrings&quot; organisiert, die man sich als Container
+								f&uuml;r mehrere Schl&uuml;ssel vorstellen kann.
+							       	Folgende Dateien finden sich im Normalfall
+								mindestens in ~/.gnupg/:
+								<ul>
+									<li>
+										<strong>secring.gpg</strong> - 
+										Enth&auml;lt die privaten Teile von Schl&uuml;sseln, 
+										wo sie bekannt sind.
+									</li>
+									<li>
+										<strong>pubring.gpg</strong> - 
+										Enth&auml;lt alle &ouml;ffentlichen Schl&uuml;ssel.
+									</li>
+									<li>
+										<strong>trustdb.gpg</strong> - 
+										Enth&auml;lt Informationen dar&uuml;ber, zu welchem
+										Grad bestimmten Schl&uuml;sseln vertraut wird.
+									</li>
+								</ul>
+
+								<code>pubring.gpg</code> und <code>secring.gpg</code> werden
+								von GnuPG standardm&auml;ssig als Keyrings verwendet.
+								Nat&uuml;rlich ist es auf einem Livesystem eher ungewollt,
+								diese Dateien im Homeverzeichnis zu haben, daher macht es Sinn
+								sich bspw. einen verschl&uuml;sselten USB-Stick zu bauen und
+								das Master-Keypair dort zu speichern.
+							</p>
+							<p>
+								Damit kommen wir auch schon zum Hauptteil. Die nachfolgenden
+								Schritte sollten nacheinander auf dem vorher erw&auml;hnten
+								sicheren System (mit gemountetem sicheren Storage-Medium) ausgef&uuml;hrt 
+								werden.
+								<ol>
+									<li>
+										<h3>GNUPGHOME setzen</h3>
+										<code>user@box:~$ GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
+									</li>
+									<li>
+										<h3>Master-Keypair generieren</h3>
+										<code>user@box:~$ gpg --gen-key</code>	
+										<br/>
+										GPG f&uuml;hrt uns nun durch einige Abfragen, die
+										den neuen Key betreffen.
+										Wir m&ouml;chten einen Schl&uuml;ssel, der sowohl
+										signieren als auch verschl&uuml;sseln kann.
+										In unserem Fall kann man diesen sogar unbegrenzt
+										gelten lassen, da wir uns gleich noch einige
+										Rettungsseile basteln werden und der Master-Key relativ
+										sicher sein wird.
+										Als erste UID reicht im Zweifelsfall auch der Name
+										ohne Email-Adresse oder Kommentar (wir werden sp&auml;ter
+										noch Gelegenheit haben, andere hinzuzuf&uuml;gen).
+										Als Passphrase sollten wir hier eine m&ouml;glichst
+										komplexe Zeichenfolge aussuchen. Die Ger&auml;tespezifischen
+										Schl&uuml;ssel werden eigene Passphrasen bekommen.
+									</li>
+									<li>
+										<h3>Pr&auml;ferierte Algorithmen &amp; weitere UIDs</h3>
+									</li>
+									<li>
+										<h3>Subkeys hinzuf&uuml;gen</h3>
+									</li>
+									<li>
+										<h3>Revocation Certificate generieren</h3>
+									</li>
+									<li>
+										<h3>Komplettes Master-Keypair exportieren</h3>
+									</li>
+									<li>
+										<h3>Subkeys einzeln exportieren und Passphrasen &auml;ndern</h3>
+									</li>
+									<li>
+										<h3>Komplettes Master-Keypair wieder in secring.gpg importieren</h3>
+									</li>
+								</ol>
+								
+								Damit haben wir uns ein ziemlich gutes&trade; Keypair gebaut!
+							</p>
 						</div>
 					</div>
 
