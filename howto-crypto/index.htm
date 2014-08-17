@@ -56,28 +56,30 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<p class="annotation">Dieser Abschnitt erz&auml;hlt nur ein paar Krypto-Hintergr&uuml;nde und kann prinzipiell &uuml;bersprungen werden.</span>	
 						<div class="section-padding">
 							Grunds&auml;tzlich unterscheidet man 2 Typen der Kryptographie:
-							<p>
-								<h3>Symmetrische Kryptographie</h3>
-								Ver- und Entschl&uuml;sselung benutzen den selben Schl&uuml;ssel, dieser muss
-								also sowohl dem Sender als auch dem Empf&auml;nger vorher bekannt sein und
-								in irgendeiner Form ausgetauscht werden - auch &uuml;ber einen m&ouml;glichst
-								sicheren Kanal.
-								Vorteile sind wohl die einfachere Umsetzung und Implementierung sowie
-								&quot;beweisbarere&quot; Sicherheit und bessere Performance.
-							</p>
-							<p>	
-								<h3>Asymmetrische (aka Public-Key) Kryptographie</h3>
-								Der f&uuml;r &quot;dynamischere&quot; Kommunikation interessantere Teil (und auch der
-								um den sich dieses Dokument haupts&auml;chlich dreht).
-								Hierbei existieren f&uuml;r einen Schl&uuml;ssel zwei Teile, n&auml;mlich ein 
-								privater (geheimer) Teil, der (im besten Fall) nur dem Besitzer bekannt ist und
-								ein &ouml;ffentlicher Teil, der jedem bekannt sein darf - und je nach System
-								auch m&ouml;glichst weit verbreitet werden soll.
-								Algorithmen f&uuml;r asymmetrische Krypto sind eher komplex und langsam,
-								daher nutzen sie viele Protokolle um zu Beginn einen gemeinsamen Schl&uuml;ssel
-								auszutauschen, mit welchem dann die folgende Kommunikation symmetrisch verschl&uuml;sselt
-								wird.
-							</p>
+							<ul>
+								<li>
+									<h3>Symmetrische Kryptographie</h3>
+									Ver- und Entschl&uuml;sselung benutzen den selben Schl&uuml;ssel, dieser muss
+									also sowohl dem Sender als auch dem Empf&auml;nger vorher bekannt sein und
+									in irgendeiner Form ausgetauscht werden - auch &uuml;ber einen m&ouml;glichst
+									sicheren Kanal.
+									Vorteile sind wohl die einfachere Umsetzung und Implementierung sowie
+									&quot;beweisbarere&quot; Sicherheit und bessere Performance.
+								</li>
+								<li>	
+									<h3>Asymmetrische (aka Public-Key) Kryptographie</h3>
+									Der f&uuml;r &quot;dynamischere&quot; Kommunikation interessantere Teil (und auch der
+									um den sich dieses Dokument haupts&auml;chlich dreht).
+									Hierbei existieren f&uuml;r einen Schl&uuml;ssel zwei Teile, n&auml;mlich ein 
+									privater (geheimer) Teil, der (im besten Fall) nur dem Besitzer bekannt ist und
+									ein &ouml;ffentlicher Teil, der jedem bekannt sein darf - und je nach System
+									auch m&ouml;glichst weit verbreitet werden soll.
+									Algorithmen f&uuml;r asymmetrische Krypto sind eher komplex und langsam,
+									daher nutzen sie viele Protokolle um zu Beginn einen gemeinsamen Schl&uuml;ssel
+									auszutauschen, mit welchem dann die folgende Kommunikation symmetrisch verschl&uuml;sselt
+									wird.
+								</li>
+							</ul>
 						</div>
 					</div>
 
@@ -92,49 +94,51 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							gekauft von Symantec) und <a href="https://www.gnupg.org/">GnuPG</a> (Quelloffene, 
 							kostenlose Software (FOSS)).
 
-							<p>
-								<h3>Linux</h3>
-								Die meisten Distributionen haben GnuPG in ihren Paketarchiven;
-								am bequemsten ist es daher, den Paketmanager der Wahl dazu
-								zu bewegen, GnuPG zu installieren.
-								F&uuml;r Leute, die sich mit der Kommandozeile wohl f&uuml;hlen,
-								reicht hierbei die Versionsreihe 1.x vollkommen aus. 
-								Diese ist kleiner und hat weniger Abh&auml;ngigkeiten.
-								F&uuml;r nicht so text-feste Anwender empfiehlt sich die Versionsreihe
-								2.x, die sich mehr in die grafische Umgebung einf&uuml;gt (besonders
-								bei der Passworteingabe).
+							<ul>
+								<li>
+									<h3>Linux</h3>
+									Die meisten Distributionen haben GnuPG in ihren Paketarchiven;
+									am bequemsten ist es daher, den Paketmanager der Wahl dazu
+									zu bewegen, GnuPG zu installieren.
+									F&uuml;r Leute, die sich mit der Kommandozeile wohl f&uuml;hlen,
+									reicht hierbei die Versionsreihe 1.x vollkommen aus. 
+									Diese ist kleiner und hat weniger Abh&auml;ngigkeiten.
+									F&uuml;r nicht so text-feste Anwender empfiehlt sich die Versionsreihe
+									2.x, die sich mehr in die grafische Umgebung einf&uuml;gt (besonders
+									bei der Passworteingabe).
+	
+									<p>
+										Beispiel Debian:<br/>
+										<code>
+											apt-get install gnupg
+										</code><br/>
+										bzw<br/>
+										<code>
+											apt-get install gnupg2
+										</code>
+									</p>
+								</li>
 
-								<p>
-									Beispiel Debian:<br/>
-									<code>
-										apt-get install gnupg
-									</code><br/>
-									bzw<br/>
-									<code>
-										apt-get install gnupg2
-									</code>
-								</p>
-							</p>
-
-							<p>
-								<h3>Windows</h3>
-								Man k&ouml;nnte sich nat&uuml;rlich die &quot;Originalversion&quot; von
-								PGP kaufen, aber hey, wer will schon Geld ausgeben? ;)
-								Es gibt einen Windows-Port von GnuPG (gesponsert/betreut vom BSI - nicht sicher
-								was man davon halten soll...), welches sich aber nur unter Schmerzen davon 
-								&uuml;berzeugen l&auml;sst, sein Interface auf Englisch auszugeben - wer allerdings 
-								gerne deutsche Oberfl&auml;chen hat, d&uuml;rfte hier gl&uuml;cklich werden.
-								Der Installer vom BSI zieht auch die Windows-Version von
-								<a href="http://www.kde.org/applications/utilities/kleopatra/">Kleopatra</a> 
-								(einen grafischen Schl&uuml;sselmanager aus dem KDE-Projekt)
-								mit nach, der einige Techniken die in diesem Dokument sp&auml;ter beschrieben werden
-								(zb. Offline-Masterkeys) nicht oder nur teilweise unterst&uuml;tzt.
-								Es w&auml;re daher wohl (auch unter Sicherheitsaspekten) eine gute Idee,
-								zumindest die Key-Erzeugung mit einem (Live-)Linux-System vorzunehmen.
-								<br/><br/>
-								Es ist wohl auch m&ouml;glich GnuPG unter Cygwin zu bauen, wenn man
-								sich diesen Spass g&ouml;nnen will.
-							</p>
+								<li>
+									<h3>Windows</h3>
+									Man k&ouml;nnte sich nat&uuml;rlich die &quot;Originalversion&quot; von
+									PGP kaufen, aber hey, wer will schon Geld ausgeben? ;)
+									Es gibt einen Windows-Port von GnuPG (gesponsert/betreut vom BSI - nicht sicher
+									was man davon halten soll...), welches sich aber nur unter Schmerzen davon 
+									&uuml;berzeugen l&auml;sst, sein Interface auf Englisch auszugeben - wer allerdings 
+									gerne deutsche Oberfl&auml;chen hat, d&uuml;rfte hier gl&uuml;cklich werden.
+									Der Installer vom BSI zieht auch die Windows-Version von
+									<a href="http://www.kde.org/applications/utilities/kleopatra/">Kleopatra</a> 
+									(einen grafischen Schl&uuml;sselmanager aus dem KDE-Projekt)
+									mit nach, der einige Techniken die in diesem Dokument sp&auml;ter beschrieben werden
+									(zb. Offline-Masterkeys) nicht oder nur teilweise unterst&uuml;tzt.
+									Es w&auml;re daher wohl (auch unter Sicherheitsaspekten) eine gute Idee,
+									zumindest die Key-Erzeugung mit einem (Live-)Linux-System vorzunehmen.
+									<br/><br/>
+									Es ist wohl auch m&ouml;glich GnuPG unter Cygwin zu bauen, wenn man
+									sich diesen Spass g&ouml;nnen will.
+								</li>
+							</ul>
 						</div>
 					</div>
 					
@@ -158,59 +162,62 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 							Ein GPG-Key enth&auml;lt mehrere Untereinheiten:
 
-							<p>
-								<h3>User-IDs (UIDs)</h3>
-								Ein Key kann viele verschiedene Identit&auml;ten eines einzelnen Benutzers
-								enthalten. Eine UID besteht aus einem Namen, einer Emailadresse und einem Kommentar.
-								Nur das Namensfeld ist zwingend erforderlich, die anderen beiden sind optional.
+							<ul>
+								<li>
+									<h3>User-IDs (UIDs)</h3>
+									Ein Key kann viele verschiedene Identit&auml;ten eines einzelnen Benutzers
+									enthalten. Eine UID besteht aus einem Namen, einer Emailadresse und einem Kommentar.
+									Nur das Namensfeld ist zwingend erforderlich, die anderen beiden sind optional.
 
-								<p>
-									Im Normalfall hat ein Key eine UID f&uuml;r jede Emailadresse, auf der der Benutzer
-									verschl&uuml;sselte/signierte Kommunikation senden oder empfangen m&ouml;chte.
-									UIDs werden besonders im Zusammenhang mit dem Web of Trust zu wichtigen Merkmalen
-									eines Keys.
-								</p>
+									<p>
+										Im Normalfall hat ein Key eine UID f&uuml;r jede Emailadresse, auf der der Benutzer
+										verschl&uuml;sselte/signierte Kommunikation senden oder empfangen m&ouml;chte.
+										UIDs werden besonders im Zusammenhang mit dem Web of Trust zu wichtigen Merkmalen
+										eines Keys.
+									</p>
 								
-								<p>
-									UIDs haben jedoch keinen kryptographischen Einfluss auf den Schl&uuml;ssel,
-									sondern gelten nur als Identifikationsm&ouml;glichkeit (bedeutet: Es wird nicht
-									an eine bestimmte UID verschl&uuml;sselt, sondern an einen bestimmten Krypto-Key).
-								</p>
+									<p>
+										UIDs haben jedoch keinen kryptographischen Einfluss auf den Schl&uuml;ssel,
+										sondern gelten nur als Identifikationsm&ouml;glichkeit (bedeutet: Es wird nicht
+										an eine bestimmte UID verschl&uuml;sselt, sondern an einen bestimmten Krypto-Key).
+									</p>
 
-								<p>
-									Der Besitzer eines Keys kann diesem w&auml;hrend seiner Lebenszeit unbegrenzt
-									viele UIDs hinzuf&uuml;gen und diese auch wieder &quot;zur&uuml;ckrufen&quot; (revoken).
-									Es ist zwar m&ouml;glich eine UID von einem Key zu l&ouml;schen, jedoch
-									werden Keys normalerweise additiv importiert - sprich, hat ein anderer User
-									den &ouml;ffentlichen Schl&uuml;ssel in einer Version, in der die gel&ouml;schte UID
-									noch existiert, so wird diese beim Import der neuen Version nicht gel&ouml;scht,
-									sondern existiert weiter.
-								</p>
-							</p>
+									<p>
+										Der Besitzer eines Keys kann diesem w&auml;hrend seiner Lebenszeit unbegrenzt
+										viele UIDs hinzuf&uuml;gen und diese auch wieder &quot;zur&uuml;ckrufen&quot; (revoken).
+										Es ist zwar m&ouml;glich eine UID von einem Key zu l&ouml;schen, jedoch
+										werden Keys normalerweise additiv importiert - sprich, hat ein anderer User
+										den &ouml;ffentlichen Schl&uuml;ssel in einer Version, in der die gel&ouml;schte UID
+										noch existiert, so wird diese beim Import der neuen Version nicht gel&ouml;scht,
+										sondern existiert weiter.
+									</p>
+								</li>
 
-							<p>
-								<h3>Subkeys</h3>
-								Ein Schl&uuml;sselpaar kann beliebig viele &quot;Unterschl&uuml;ssel&quot; besitzen - 
-								mit jeweils eigenen Schl&uuml;sselalgorithmen, Ablaufdaten, Schl&uuml;ssell&auml;ngen
-								und Fingerprints.
-								Trotzdem sind diese Subkeys mathematisch Teil des &uuml;bergeordneten Schl&uuml;ssels.
-								Ihre privaten Teile k&ouml;nnen jedoch unabh&auml;ngig von denen des Hauptschl&uuml;ssels 
-								exportiert und verwendet werden, wodurch sich einige Verbesserungen in der Benutzbarkeit 
-								ergeben.
+								<li>
+									<h3>Subkeys</h3>
+									Ein Schl&uuml;sselpaar kann beliebig viele &quot;Unterschl&uuml;ssel&quot; besitzen - 
+									mit jeweils eigenen Schl&uuml;sselalgorithmen, Ablaufdaten, Schl&uuml;ssell&auml;ngen
+									und Fingerprints.
+									Trotzdem sind diese Subkeys mathematisch Teil des &uuml;bergeordneten Schl&uuml;ssels.
+									Ihre privaten Teile k&ouml;nnen jedoch unabh&auml;ngig von denen des Hauptschl&uuml;ssels 
+									exportiert und verwendet werden, wodurch sich einige Verbesserungen in der Benutzbarkeit 
+									ergeben.
+									<p>
+										Genau wie UIDs kann der Besitzer eines Schl&uuml;ssels diesem w&auml;hrend seiner Lebenszeit
+										beliebig viele Subkeys hinzuf&uuml;gen und diese auch wieder zur&uuml;ckrufen.
+									</p>
 
-								Genau wie UIDs kann der Besitzer eines Schl&uuml;ssels diesem w&auml;hrend seiner Lebenszeit
-								beliebig viele Subkeys hinzuf&uuml;gen und diese auch wieder zur&uuml;ckrufen.
-
-								Anders als UIDs sind Subkeys jedoch kryptographisch relevant:
-								Sie besitzen einen eigenen eindeutigen Fingerprint und an sie kann speziell verschl&uuml;sselt
-								(Encryption-Subkeys) oder mit ihnen signiert (Signing-Subkeys) werden.
-							</p>
-							<p>
-								<h3>Photo IDs</h3>
-								Es ist auch m&ouml;glich, kleinere Bilddateien an Schl&uuml;ssel anzuh&auml;ngen.
-								Diese koennen bspw. als weiteres Verifikationsmedium f&uuml;r die Identit&auml;t eines 
-								Schl&uuml;sselinhabers genutzt werden.
-							</p>
+									Anders als UIDs sind Subkeys jedoch kryptographisch relevant:
+									Sie besitzen einen eigenen eindeutigen Fingerprint und an sie kann speziell verschl&uuml;sselt
+									(Encryption-Subkeys) oder mit ihnen signiert (Signing-Subkeys) werden.
+								</li>
+								<li>
+									<h3>Photo IDs</h3>
+									Es ist auch m&ouml;glich, kleinere Bilddateien an Schl&uuml;ssel anzuh&auml;ngen.
+									Diese koennen bspw. als weiteres Verifikationsmedium f&uuml;r die Identit&auml;t eines 
+									Schl&uuml;sselinhabers genutzt werden.
+								</li>
+							</ul>
 						</div>
 					</div>
 
@@ -236,18 +243,22 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 							<p>
 								Hierzu bieten sich einige M&ouml;glichkeiten:
-								<p class="subsection">
-									<h3>Livesysteme</h3>
-									Es gibt einige Linux-Distributionen (oder auch BSD, falls jemand das lieber ist),
-									die Live-Medien anbieten - also bootbare USB-Sticks oder CDs
-									die schon alles n&ouml;tige f&uuml;r GPG an Bord haben (und im Idealfall
-									auch nicht mehr als das).
-									<h3>Ein Offline-/Airgapped-System</h3>
-									Bei dieser Methode verwendet man einen Computer (am sinnvollsten einen Laptop)
-									nur f&uuml;r diesen Zweck. Er wird einmal mit einem minimalen System (von einem
-									vertrauensw&uuml;rdigen Medium) installiert und darf niemals eine Internetverbindung
-									haben - daher der Name &quot;Airgap&quot;.
-								</p>
+								<ul>
+									<li>
+										<h3>Livesysteme</h3>
+										Es gibt einige Linux-Distributionen (oder auch BSD, falls jemand das lieber ist),
+										die Live-Medien anbieten - also bootbare USB-Sticks oder CDs
+										die schon alles n&ouml;tige f&uuml;r GPG an Bord haben (und im Idealfall
+										auch nicht mehr als das).
+									</li>
+									<li>
+										<h3>Ein Offline-/Airgapped-System</h3>
+										Bei dieser Methode verwendet man einen Computer (am sinnvollsten einen Laptop)
+										nur f&uuml;r diesen Zweck. Er wird einmal mit einem minimalen System (von einem
+										vertrauensw&uuml;rdigen Medium) installiert und darf niemals eine Internetverbindung
+										haben - daher der Name &quot;Airgap&quot;.
+									</li>
+								</ul>
 								Generell empfiehlt es sich, auf dem System der Wahl m&ouml;glichst
 								wenige Prozesse aktiv zu haben (bspw. nur Textsystem), w&auml;hrend der Erzeugung keine
 								physische Netzwerkverbindung zu haben (Kabel ziehen!) und die
