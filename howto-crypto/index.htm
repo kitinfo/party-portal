@@ -442,9 +442,11 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									</li>
 									<li>
 										<h3>Subkeys einzeln exportieren und Passphrasen &auml;ndern</h3>
+										//TODO
 									</li>
 									<li>
 										<h3>Komplettes Master-Keypair wieder in secring.gpg importieren</h3>
+										//TODO
 									</li>
 								</ol>
 								
@@ -479,9 +481,73 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 
 					<div>
-						<h2>Was tun, wenn der Schl&uuml;ssel kompromittiert ist?</h2>
+						<h2>Was tun, wenn der Schl&uuml;ssel kompromittiert wurde?</h2>
 						<div class="section-padding">
-							//revcert importieren und senden, etc
+							Sollte einer der ger&auml;tespezifischen Schl&uuml;ssel kompromittiert
+							werden (Malware auf dem Handy, etc) oder verloren gehen, so laden wir zuerst
+							wieder unser gesichertes System und mounten das sichere Speichermedium.
+							<br/>
+							Dann f&uuml;hren wir nacheinander folgende Schritte aus:
+							<ol>
+								<li>
+									GNUPGHOME wieder auf das &quot;sichere&quot; GPG-Verzeichnis setzen.<br/>
+									<code>user@box:~$ export GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
+								</li>
+								<li>
+									Schl&uuml;ssel bearbeiten.<br/>
+									<code>user@box:~$ gpg --edit-key &lt;identifier&gt;</code>	
+								</li>
+								<li>
+									Mit <br/><code>gpg&gt; key &lt;keyindex&gt;</code>
+							       		<br/>
+									die Subkeys ausw&auml;hlen,
+									die revoked werden sollen. <code>keyindex</code> ist dabei der Index des 
+									Unterschl&uuml;ssels, beginnend bei 1. Ein <code>key</code>-Befehl
+									selektiert einen Schl&uuml;ssel (bezeichnet durch <code>sub*</code>),
+									ein weiterer deselektiert ihn.
+								</li>
+								<li>
+									<code>gpg&gt; revkey</code><br/>
+									startet einen Assistenten, der einen Grund f&uuml;r den R&uuml;ckruf
+									sowie die Passphrase abfragt.
+								</li>
+								<li>
+									<code>gpg&gt; save</code><br/>
+									speichert unsere &Auml;nderungen.
+								</li>
+								<li>
+									Wir exportieren jetzt noch unseren &ouml;ffentlichen Schl&uuml;ssel neu,
+									um die Ver&auml;nderung bekannt machen zu k&ouml;nnen.<br/>
+									<code>gpg --export --armor --no-emit-version <identifier> > /media/unsichererTeil/mein-key.asc</code><br/>
+								</li>
+								<li>
+									Jetzt k&ouml;nnen wir den &ouml;ffentlichen Schl&uuml;ssel auf einer
+									&quot;unsicheren&quot; Maschine wieder importieren und an die Keyserver senden.<br/>
+									<code>
+										gpg --import /media/unsichererTeil/mein-key.asc<br/>
+										gpg --send-keys &lt;identifier&gt;
+									</code>
+								</li>
+							</ol>
+							Um neue Subkeys hinzuzuf&uuml;gen, k&ouml;nnen wir der obigen Anleitung zum
+							generieren des Keypairs folgen und dabei die Schritte 2 und 3 auslassen.
+							<p>
+								Sollte dagegen das Master-Keypair verloren gegangen sein oder
+								uns versehentlich in irgendwelche unsicheren Medien gekommen sein,
+								wird es Zeit, das Revocation Certificate abzustauben.
+								Wenn wir die damals erzeugte Datei noch verf&uuml;gbar haben,
+								ist der Schritt recht einfach:<br/>
+								<code>gpg --import /media/meinSicheresMedium/master-pair.revcert</code><br/>
+								Sollte dies nicht mehr der Fall sein, m&uuml;ssen wir die ausgedruckte
+								Version rauskramen, abtippen und dann genauso importieren.
+								Der Import des Revocation Certificates markiert das komplette Keypair als revoked. 
+								Um das nun auch noch der Welt mitzuteilen, sollten wir die Keyserver von der 
+								Ver&auml;nderung in Kenntnis setzen:<br/>
+								<code>gpg --send-keys &lt;identifier&gt;</code><br/>
+								Mit dem n&auml;chsten Update unseres Keys aus den Keyservern sind damit
+								die Benutzer in Kenntnis gesetzt, dass der Key zur&uuml;ckgerufen wurde.
+								Jetzt schnell ein neues Keypair erzeugen! ;)
+							</p>
 						</div>
 					</div>
 					
