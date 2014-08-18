@@ -332,8 +332,11 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										setzen wir mit <br/>
 										<code>user@box:~$ export GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
 										<br/>
-									       	eine Umgebungsvariable, die GPG anweist, seine
-										Dateien auf unserem sicheren Medium zu speichern.
+										eine Umgebungsvariable, die GPG anweist, seine Dateien auf unserem sicheren 
+										Medium zu speichern. Der Ordner sollte die Zugriffsmaske 700
+										(Besitzer: lesen, schreiben, ausf&uuml;hren; Gruppe: keine; Alle: keine)
+										besitzen, ansonsten kann es sein dass GPG bei manchen Befehlen wegen
+										&quot;unsicherer Zugriffsrechte&quot; den Dienst verweigert.
 									</li>
 									<li>
 										<h3>Master-Keypair generieren</h3>
@@ -442,8 +445,10 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								
 								Damit haben wir uns ein ziemlich gutes&trade; Keypair gebaut!
 								Wenn wir den &ouml;ffentlichen Teil des Master-Keys jetzt auf einer
-								&quot;unsicheren&quot; Maschine mit <code>gpg --import &lt;file.asc&gt;</code>
-								wieder importieren und mit <code>gpg --send-keys &lt;fingerprint&gt;</code>
+								&quot;unsicheren&quot; Maschine mit <br/>
+								<code>gpg --import /media/unsichererTeil/mein-key.asc</code> <br/>
+								wieder importieren und mit<br/>
+								<code>gpg --send-keys &lt;fingerprint&gt;</code><br/>
 								an einen Keyserver schicken, k&ouml;nnen uns auch andere Menschen
 								finden. Alternativ (oder auch zus&auml;tzlich) kann man nat&uuml;rlich 
 								den &ouml;ffentlichen Teil auch auf seiner Homepage zum Download anbieten.
