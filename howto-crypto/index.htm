@@ -247,7 +247,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									<li>
 										<h3>Livesysteme</h3>
 										Es gibt einige Linux-Distributionen (oder auch BSD, falls jemand das lieber ist),
-										die Live-Medien anbieten - also bootbare USB-Sticks oder CDs
+										die Live-Medien anbieten (bspw. <a href="https://tails.boum.org/">Tails</a>, 
+										<a href="http://grml.org/">grml</a>) - also bootbare USB-Sticks oder CDs
 										die schon alles n&ouml;tige f&uuml;r GPG an Bord haben (und im Idealfall
 										auch nicht mehr als das).
 									</li>
@@ -262,7 +263,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Generell empfiehlt es sich, auf dem System der Wahl m&ouml;glichst
 								wenige Prozesse aktiv zu haben (bspw. nur Textsystem), w&auml;hrend der Erzeugung keine
 								physische Netzwerkverbindung zu haben (Kabel ziehen!) und die
-								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick zu speichern.
+								sensitiven Daten bspw. auf einem verschl&uuml;sselten USB-Stick (mit einer Partition, die nie
+								an &quot;unsicheren&quot; Systemen gemountet wird und einer, die dazu dient, Daten auf
+								&quot;potentiell sichere&quot; Systeme zu &uuml;bertragen) zu speichern.
 							</p>
 							<p>
 								Wir werden in dieser Anleitung ein Keypair mit mehreren
@@ -324,12 +327,20 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<ol>
 									<li>
 										<h3>GNUPGHOME setzen</h3>
-										<code>user@box:~$ GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
+										Damit unsere Schl&uuml;ssel nicht auf der Platte oder im
+										tempor&auml;ren Homeverzeichnis unseres Livesystems landen,
+										setzen wir mit <br/>
+										<code>user@box:~$ export GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
+										<br/>
+									       	eine Umgebungsvariable, die GPG anweist, seine
+										Dateien auf unserem sicheren Medium zu speichern.
 									</li>
 									<li>
 										<h3>Master-Keypair generieren</h3>
+										Mit dem Befehl<br/>
 										<code>user@box:~$ gpg --gen-key</code>	
 										<br/>
+										starten wir den Assistenten zur Schl&uuml;sselerzeugung.
 										GPG f&uuml;hrt uns nun durch einige Abfragen, die
 										den neuen Key betreffen.
 										Wir m&ouml;chten einen Schl&uuml;ssel, der sowohl
@@ -344,8 +355,6 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Als Passphrase sollten wir hier eine m&ouml;glichst
 										komplexe Zeichenfolge aussuchen. Die Ger&auml;tespezifischen
 										Schl&uuml;ssel werden eigene Passphrasen bekommen.
-										Am Ende best&auml;tigen wir mit <code>&gt; save</code>,
-										dass wir den neuen Schl&uuml;ssel speichern wollen.
 									</li>
 									<li>
 										<h3>Pr&auml;ferierte Algorithmen &amp; weitere UIDs</h3>
@@ -375,14 +384,53 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									</li>
 									<li>
 										<h3>Subkeys hinzuf&uuml;gen</h3>
-										//lifetime
+										Wir beginnen wieder mit<br/>
+										<code>user@box:~$ gpg --edit-key &lt;identifier&gt;</code><br/>
+										unseren Key zu bearbeiten. Diesmal starten wir mit<br/>
+										<code>gpg&gt; addkey</code><br/>
+										den Assistent f&uuml;r das hinzuf&uuml;gen eines Subkeys. Wir entsperren
+										hierf&uuml;r unseren Schl&uuml;ssel wie gehabt mit der Passphrase und
+										w&auml;hlen dann den Typ, den unser neuer Subkey haben soll - in
+										unserem Fall dann ein &quot;Sign only&quot;-Key. Es ist auch m&ouml;glich,
+										einen Encryption-Subkey pro Ger&auml;t zu erstellen - nur muss dies demjenigen,
+										der an den Besitzer verschl&uuml;sselt, kommuniziert werden. Dateien, die an
+										einen bestimmten Subkey verschl&uuml;sselt sind, k&ouml;nnen auch nur mit
+										dessen privaten Teil entschl&uuml;sselt werden.<br/>
+										Den Subkeys geben wir in unserem Fall am besten eine Lebenszeit von
+										2 Jahren - nach denen dem Master-Key dann problemlos neue hinzugef&uuml;gt und
+										diese dann die alten auf den Ger&auml;ten ersetzen.<br/>
+										Haben wir alle unsere Subkeys erzeugt, speichern wir unsere &Auml;nderungen
+										mit einem<br/>
+										<code>gpg&gt; save</code>
 									</li>
 									<li>
 										<h3>Revocation Certificate generieren</h3>
+										Um das komplette Master-Keypair im Notfall (bspw. geheime Teile komplett verloren) 
+										zur&uuml;ckrufen zu k&ouml;nnen, erzeugen wir jetzt ein sogenanntes 
+										&quot;Revocation Certificate&quot; mit<br/>
+										<code>gpg --gen-revoke &lt;identifier&gt; &gt; /media/meinSicheresMedium/master-pair.revcert</code><br/>
+										Die entstandene Datei sollten wir wenn irgendwie m&ouml;glich auch auf einem
+										sicheren Drucker drucken (ist nicht &uuml;berm&auml;ssig gross) und danach irgendwo
+										sicher aufbewahren. Im &auml;ussersten Notfall k&ouml;nnen wir das Revocation
+										Certificate dann abtippen, importieren und an die Keyserver senden, um unser
+										Master-Keypair als ung&uuml;ltig zu markieren.
 									</li>
 									<li>
 										<h3>Komplettes Master-Keypair exportieren</h3>
-										//public / private parts
+										Als n&auml;chstes werden wir das komplette Master-Keypair, inklusive
+										der Subkey-Secrets exportieren.<br/>
+										<code>
+											gpg --export --armor --no-emit-version &lt;identifier&gt; &gt; /media/unsichererTeil/mein-key.asc<br/>
+											gpg --export-secret-keys --armor &lt;identifier&gt; &gt; /media/meinSicheresMedium/master.secret-key
+										</code>
+										<br/>
+										Die resultierende .secret-key Datei ist der wichtigste Teil der ganzen &Uuml;bung.
+										Bekommt ein Angreifer sie in die Hand, haben wir verloren (bis auf die Passphrase,
+										allerdings ist das je nach Angreifer eine minimale Barriere) und die einzige
+										Chance ist das Revocation Certificate.<br/>
+										Die .asc Datei ist unser &ouml;ffentlicher Schl&uuml;ssel, weswegen wir ihn auch
+										auf den &quot;unsicheren&quot; Teil unseres Speichermediums exportiert haben.
+										Eine Kopie im sicheren Teil vorzuhalten schadet jedoch nicht.
 									</li>
 									<li>
 										<h3>Subkeys einzeln exportieren und Passphrasen &auml;ndern</h3>
@@ -445,6 +493,12 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									<a href="http://www.kde.org/community/donations/index.php#money">Kleopatra/KDE Spenden-Informationen</a>
 								</li>
+								<li>
+									<a href="https://tails.boum.org/contribute/index.en.html">Tails contribution information</a>
+								</li>
+								<li>
+									<a href="http://grml.github.io/">grml contribution information</a>
+								</li>
 							</ul>
 							Die Informationen in diesem Dokument wurden zum grossen Teil aus
 							dem Kopf geschrieben - unterst&uuml;tzt durch die Dokumentationen
@@ -459,6 +513,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								</li>
 								<li>
 									<a href="https://alexcabal.com/creating-the-perfect-gpg-keypair/">Alex Cabal: Creating the perfect GPG Keypair</a>
+								</li>
+								<li>
+									<a href="https://wiki.debian.org/Subkeys">Debian Wiki: GPG Subkeys</a>
 								</li>
 							</ul>
 						</div>
