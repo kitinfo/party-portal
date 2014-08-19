@@ -441,12 +441,61 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Eine Kopie im sicheren Teil vorzuhalten schadet jedoch nicht.
 									</li>
 									<li>
-										<h3>Subkeys einzeln exportieren und Passphrasen &auml;ndern</h3>
-										//TODO
+										<h3>Subkeys einzeln exportieren &amp; Passphrasen anpassen</h3>
+										In diesem Schritt werden wir nun die Dateien erzeugen, die wir auf die einzelnen
+										Ger&auml;te verteilen werden. Hierzu m&uuml;ssen wir uns entscheiden,
+										welche Subkeys auf welchem Ger&auml;t verf&uuml;gbar sein sollen.
+										Um Dateien/Texte zu signieren und verschl&uuml;sselte Dateien zu versenden,
+										gen&uuml;gt ein Signing-Subkey.
+										Soll das Ger&auml;t auch verschl&uuml;sselte Dateien empfangen und entschl&uuml;sseln
+										sollen, so wird ein Encryption-Subkey ben&ouml;tigt. 
+										<p>
+											Hierbei m&uuml;ssen wir beachten, dass verschl&uuml;sselte Dateien immer nur 
+											mit dem Subkey entschl&uuml;sselt werden k&ouml;nnen, an den sie auch 
+											verschl&uuml;sselt wurden.
+											Es besteht zwar die M&ouml;glichkeit, an mehrere Subkeys zu verschl&uuml;sseln,
+											jedoch muss dies dem Sender kommuniziert werden (und wird nicht von jeder 
+											Software unterst&uuml;tzt). Am einfachsten ist es daher, einen 
+											Encryption-Subkey am Master-Keypair zu haben, und diesen nur auf Ger&auml;ten, 
+											denen zumindest grundlegend vertraut wird, zu verwenden.
+										</p>
+										Um die Passphrase anzupassen, begeben wir uns wieder in den Bearbeitungsmodus:<br/>
+										<code>gpg --edit-key &lt;identifier&gt;</code><br/>
+										und starten mit<br/>
+										<code>gpg&gt; passwd</code><br/>
+										den Assistenten zum &auml;ndern der Passphrase und &auml;ndern diese in
+										unsere &quot;Ger&auml;tepassphrase&quot;. 
+										
+										Wir speichern wie gewohnt unsere &Auml;nderungen mit<br/>
+										<code>gpg&gt; save</code><br/>
+
+										Danach exportieren wir mit<br/>
+										<code>gpg --armor --export-secret-subkeys &lt;subfp1&gt;! &lt;subfp2&gt;! &gt /media/meinSicheresMedium/geraetN.subkey-secrets</code><br/>
+										nacheinander die Subkeys f&uuml;r die einzelnen Ger&auml;te.
+										<code>subfpN</code> bezeichnet hierbei die Fingerprints der Subkeys, die exportiert
+										werden sollen. Die Ausrufezeichen nach den Fingerprints sind wichtig (sonst exportiert
+										GPG aus unerfindlichen Gr&uuml;nden alle Subkey-Secrets)!<br/>
+										Nat&uuml;rlich k&ouml;nnen wir auch pro Ger&auml;t eine eigene Passphrase festlegen - 
+										dazu m&uuml;ssen wir nur vor jedem Export die Passphrase &auml;ndern.
 									</li>
 									<li>
 										<h3>Komplettes Master-Keypair wieder in secring.gpg importieren</h3>
-										//TODO
+										Statt uns die M&uuml;he zu machen, die Passphrase des Master-Keypairs wieder
+										zur&uuml;ck zu &auml;ndern, l&ouml;schen wir es einfach mit dem Befehl<br/>
+										<code>gpg --delete-secret-key &lt;identifier&gt;</code><br/>
+										vom Keyring und importieren es danach mit<br/>
+										<code>gpg --import /media/meinSicheresMedium/master.secret-key</code><br/>
+										komplett neu.
+									</li>
+									<li>
+										<h3>Ger&auml;te-Keypairs importieren</h3>
+										Auf den jeweiligen Ger&auml;ten k&ouml;nnen jetzt die .subkey-secret Dateien
+										importiert werden.
+										Die Ausgabe des Befehls<br/>
+										<code>gpg --list-secret-keys</code><br/>
+										sollte dabei jetzt <code>sec#</code> am Hauptschl&uuml;ssel anzeigen,
+										was bedeutet dass der geheime Schl&uuml;ssel f&uuml;r das Master-Pair
+										nicht vorhanden ist - wohl aber der f&uuml;r bestimmte Subkeys.
 									</li>
 								</ol>
 								
