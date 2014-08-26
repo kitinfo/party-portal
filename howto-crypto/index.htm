@@ -214,7 +214,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									<h3>Photo IDs</h3>
 									Es ist auch m&ouml;glich, kleinere Bilddateien an Schl&uuml;ssel anzuh&auml;ngen.
-									Diese koennen bspw. als weiteres Verifikationsmedium f&uuml;r die Identit&auml;t eines 
+									Diese k&ouml;nnen bspw. als weiteres Verifikationsmedium f&uuml;r die Identit&auml;t eines 
 									Schl&uuml;sselinhabers genutzt werden.
 								</li>
 							</ul>
@@ -515,8 +515,60 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Wie verschl&uuml;ssele/entschl&uuml;ssele/signiere ich?</h2>
 						<div class="section-padding">
-							//gpg-agent
-							//list-keys, etc
+							Damit kommen wir jetzt zur konkreten Anwendung von GnuPG - also dem
+							eigentlich interessanten Teil ;)
+
+							<p>
+								F&uuml;r bestimmte Protokolle/Vorg&auml;nge bei denen GPG eingesetzt werden
+								kann, gibt es auch eigene Tools, die die Benutzung einfacher machen - 
+								beispielsweise das <a href="https://www.enigmail.net/">Enigmail-Plugin</a> f&uuml;r 
+								Thunderbird.<br/>
+
+								Die Benutzung dieser Tools sollte meist entweder selbsterkl&auml;rend sein,
+								oder den jeweiligen manpages oder README-Files entnehmen zu sein.<br/>
+								Wir werden uns hier wieder auf die Benutzung von GPG mit der Kommandozeile
+								unter Linux beschr&auml;nken. Solltest du jedoch Muse haben, einige Abs&auml;tze
+								&uuml;ber ein bestimmtes Tool zu schreiben, bist du herzlich Willkommen, diese
+								<a href="https://github.com/kitinfo/party-portal/">zu diesem Dokument beizutragen!</a>
+							</p>
+
+							<p>
+								Sollte es uns eines Tages zu M&uuml;hselig werden, f&uuml;r jede einzelne Aktion
+								unseren Key mit unserer Passphrase zu entsperren, lohnt sich ein Blick auf
+								<a href="https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html">gpg-agent</a>. 
+								Der Agent erlaubt uns, unser Keypair einmal zu entsperren, h&auml;lt es danach
+								f&uuml;r eine bestimmte Zeit in entsperrter Form vor und erspart uns so etwas Tipparbeit.
+							</p>
+
+							<h3>Signieren &amp; Verifizieren</h3>	
+							Um einen kryptographischen &quot;Beweis&quot; anzufertigen, dass wir Urheber eines bestimmten Dokumentes 
+							bzw. einer Datei sind und diese Datei auch zwischenzeitlich nicht ver&auml;ndert wurde, k&ouml;nnen 
+							wir mit GPG eine Signatur f&uuml;r eine Datei erzeugen:<br/>
+							<code>gpg --detach-sign &lt;filename&gt;</code><br/>
+							GPG erzeugt nun eine bin&auml;re Signatur und speichert sie in der Datei &lt;filename&gt;.sig.<br/>
+							Um eine Signatur einer Datei auch in normalen Texten einbetten zu k&ouml;nnen, ist es meist sinnvoller,
+							die Signatur in einem ASCII-basierten Format ausgeben zu lassen. Dies erreichen wir mit<br/>
+							<code>gpg --armor --no-emit-version --detach-sign &lt;filename&gt;</code><br/>
+							Dieser Befehl erzeugt die Datei &lt;filename&gt;.asc, welche eine ASCII-Form der Signatur enth&auml;lt.<br/>
+							Ist die zu signierende Datei eine Textdatei, so kann die Signatur auch direkt an die Nachricht angeh&auml;ngt
+							werden. Dies geschieht mittels<br/>
+							<code>gpg --no-emit-version --clearsign &lt;filename&gt;</code><br/>
+							was wiederum die Datei &lt;filename&gt;.asc erzeugt, diesmal aber mit der Originaldatei gefolgt von
+							ihrer Signatur.
+
+							<p>
+								Soll mit einem anderen Schl&uuml;ssel als mit dem Standardschl&uuml;ssel signiert werden,
+								kann dies mit dem Parameter <code>--default-key &lt;fingerprint&gt;</code> eingestellt werden.
+							</p>
+
+							Um die Signatur einer Datei zu verifizieren, m&uuml;ssen wir den &ouml;ffentlichen Schl&uuml;ssel des
+							Schl&uuml;sselpaares besitzen, mit dem die Datei signiert wurde (beispielweise via Download von einem
+							Keyserver). Danach k&ouml;nnen wir mit einem<br/>
+							<code>gpg --verify &lt;filename&gt;.asc &lt;filename&gt;</code><br/>
+							&uuml;berpr&uuml;fen, ob die vorhandene Datei derjenigen entspricht, die urspr&uuml;nglich signiert wurde.
+
+							<h3>Verschl&uuml;sseln &amp; Entschl&uuml;sseln</h3>
+
 						</div>
 					</div>
 
@@ -524,6 +576,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Wie funktioniert das Web of Trust?</h2>
 						<div class="section-padding">
 							//signingpolicy
+							//list-keys, etc
 							//list sigs etc
 						</div>
 					</div>
