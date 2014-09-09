@@ -146,7 +146,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 						<h2>Was ist ein GPG-Key(pair)?</h2>
 						<div class="section-padding">
 							Eine der Grundeinheiten des GPG-&Ouml;kosystems ist der GPG-Key (bzw das
-							GPG-Keypair, bestehend aus einem privaten und einem &ouml;ffentlichen Key), 
+							GPG-Keypair, bestehend aus einem privaten und einem &ouml;ffentlichen Teil), 
 							der lose gesagt die Repr&auml;sentation eines Benutzers (bzw. eines Individuums) 
 							darstellt.
 
@@ -156,13 +156,22 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Schl&uuml;ssel. Ein &quot;Identit&auml;tsschl&uuml;ssel&quot; kann mehrere
 								&quot;Kryptographieschl&uuml;ssel&quot;, auch mit unterschiedlichen Anwendungsbereichen
 								(Signieren, Verschl&uuml;sseln) und Algorithmen (RSA, DSA, ElGamal) besitzen.
-								Die Bedeutungen sind sich sehr &auml;hnlich und haben unter anderem gemeinsam, 
-								dass sie durch einen sogenannten Fingerprint eindeutig identifiziert werden k&ouml;nnen.
+								Jeder Kryptographie-Schl&uuml;ssel hat einen eigenen &ouml;ffentlichen sowie privaten Teil,
+								Der &ouml;ffentliche Teil des Identit&auml;tsschl&uuml;ssel bezeichnet dann alle
+								&ouml;ffentlichen Teile der in ihm enthaltenen Kryptographieschl&uuml;ssel, analog
+								mit dem privaten Teil.<br/>
+								Der Fingerprint des Haupt-Kryptographieschl&uuml;ssels wird meist stellvertretend
+								als Identifikation des Identit&auml;tsschl&uuml;ssels verwendet.
 							</p>
 
 							Ein GPG-Key enth&auml;lt mehrere Untereinheiten:
 
 							<ul>
+								<li>
+									<h3>Hauptschl&uuml;ssel</h3>
+									Der prim&auml;re Schl&uuml;ssel am Keypair (meist ein Signatur-Key) wird oft
+									als Haupt-Identifikationsmerkmal fuer den gesamten Schl&uuml;ssel verwendet.
+								</li>
 								<li>
 									<h3>User-IDs (UIDs)</h3>
 									Ein Key kann viele verschiedene Identit&auml;ten eines einzelnen Benutzers
@@ -235,7 +244,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Ger&auml;ten zu beschreiben. Ein einfacher Schl&uuml;ssel ohne weitere
 							Sicherheitsvorkehrungen kann mit dem Befehl
 							<code>
-								gpg --gen-key
+								gpg <span title="Starte Key-Erzeugungs-Assistent">--gen-key</span>
 							</code>
 							interaktiv erzeugt werden.
 							
@@ -346,7 +355,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 									<li>
 										<h3>Master-Keypair generieren</h3>
 										Mit dem Befehl<br/>
-										<code>user@box:~$ gpg --gen-key</code>	
+										<code>user@box:~$ gpg 
+											<span title="Key-Erzeugungs-Assistent starten">--gen-key</span>
+										</code>	
 										<br/>
 										starten wir den Assistenten zur Schl&uuml;sselerzeugung.
 										GPG f&uuml;hrt uns nun durch einige Abfragen, die
@@ -369,7 +380,10 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Jetzt werden wir den gerade erstellten Schl&uuml;ssel bearbeiten,
 										um einige Einstellungen vorzunehmen und weitere UIDs
 										hinzuzuf&uuml;gen.<br/>
-										<code>user@box:~$ gpg --edit-key &lt;identifier&gt;</code><br/>
+										<code>user@box:~$ gpg 
+											<span>--edit-key</span>
+											<span>&lt;identifier&gt;</span>
+										</code><br/>
 										&lt;identifier&gt; kann hierbei sein:
 										<ul>
 											<li>(Teil-)Fingerprint</li>
@@ -416,7 +430,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Um das komplette Master-Keypair im Notfall (bspw. geheime Teile komplett verloren) 
 										zur&uuml;ckrufen zu k&ouml;nnen, erzeugen wir jetzt ein sogenanntes 
 										&quot;Revocation Certificate&quot; mit<br/>
-										<code>gpg --gen-revoke &lt;identifier&gt; &gt; /media/meinSicheresMedium/master-pair.revcert</code><br/>
+										<code>user@box:~$ gpg --gen-revoke &lt;identifier&gt; &gt; /media/meinSicheresMedium/master-pair.revcert</code><br/>
 										Die entstandene Datei sollten wir wenn irgendwie m&ouml;glich auch auf einem
 										sicheren Drucker drucken (ist nicht &uuml;berm&auml;ssig gross) und danach irgendwo
 										sicher aufbewahren. Im &auml;ussersten Notfall k&ouml;nnen wir das Revocation
@@ -428,8 +442,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Als n&auml;chstes werden wir das komplette Master-Keypair, inklusive
 										der Subkey-Secrets exportieren.<br/>
 										<code>
-											gpg --export --armor --no-emit-version &lt;identifier&gt; &gt; /media/unsichererTeil/mein-key.asc<br/>
-											gpg --export-secret-keys --armor &lt;identifier&gt; &gt; /media/meinSicheresMedium/master.secret-key
+											user@box:~$ gpg --export --armor --no-emit-version &lt;identifier&gt; &gt; /media/unsichererTeil/mein-key.asc<br/>
+											user@box:~$ gpg --export-secret-keys --armor &lt;identifier&gt; &gt; /media/meinSicheresMedium/master.secret-key
 										</code>
 										<br/>
 										Die resultierende .secret-key Datei ist der wichtigste Teil der ganzen &Uuml;bung.
@@ -460,7 +474,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 											denen zumindest grundlegend vertraut wird, zu verwenden.
 										</p>
 										Um die Passphrase anzupassen, begeben wir uns wieder in den Bearbeitungsmodus:<br/>
-										<code>gpg --edit-key &lt;identifier&gt;</code><br/>
+										<code>user@box:~$ gpg --edit-key &lt;identifier&gt;</code><br/>
 										und starten mit<br/>
 										<code>gpg&gt; passwd</code><br/>
 										den Assistenten zum &auml;ndern der Passphrase und &auml;ndern diese in
@@ -470,7 +484,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										<code>gpg&gt; save</code><br/>
 
 										Danach exportieren wir mit<br/>
-										<code>gpg --armor --export-secret-subkeys &lt;subfp1&gt;! &lt;subfp2&gt;! &gt /media/meinSicheresMedium/geraetN.subkey-secrets</code><br/>
+										<code>user@box:~$ gpg --armor --export-secret-subkeys &lt;subfp1&gt;! &lt;subfp2&gt;! &gt /media/meinSicheresMedium/geraetN.subkey-secrets</code><br/>
 										nacheinander die Subkeys f&uuml;r die einzelnen Ger&auml;te.
 										<code>subfpN</code> bezeichnet hierbei die Fingerprints der Subkeys, die exportiert
 										werden sollen. Die Ausrufezeichen nach den Fingerprints sind wichtig (sonst exportiert
@@ -482,9 +496,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										<h3>Komplettes Master-Keypair wieder in secring.gpg importieren</h3>
 										Statt uns die M&uuml;he zu machen, die Passphrase des Master-Keypairs wieder
 										zur&uuml;ck zu &auml;ndern, l&ouml;schen wir es einfach mit dem Befehl<br/>
-										<code>gpg --delete-secret-key &lt;identifier&gt;</code><br/>
+										<code>user@box:~$ gpg --delete-secret-key &lt;identifier&gt;</code><br/>
 										vom Keyring und importieren es danach mit<br/>
-										<code>gpg --import /media/meinSicheresMedium/master.secret-key</code><br/>
+										<code>user@box:~$ gpg --import /media/meinSicheresMedium/master.secret-key</code><br/>
 										komplett neu.
 									</li>
 									<li>
@@ -492,7 +506,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Auf den jeweiligen Ger&auml;ten k&ouml;nnen jetzt die .subkey-secret Dateien
 										importiert werden.
 										Die Ausgabe des Befehls<br/>
-										<code>gpg --list-secret-keys</code><br/>
+										<code>user@box:~$ gpg --list-secret-keys</code><br/>
 										sollte dabei jetzt <code>sec#</code> am Hauptschl&uuml;ssel anzeigen,
 										was bedeutet dass der geheime Schl&uuml;ssel f&uuml;r das Master-Pair
 										nicht vorhanden ist - wohl aber der f&uuml;r bestimmte Subkeys.
@@ -502,9 +516,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Damit haben wir uns ein ziemlich gutes&trade; Keypair gebaut!
 								Wenn wir den &ouml;ffentlichen Teil des Master-Keys jetzt auf einer
 								&quot;unsicheren&quot; Maschine mit <br/>
-								<code>gpg --import /media/unsichererTeil/mein-key.asc</code> <br/>
+								<code>user@box:~$ gpg --import /media/unsichererTeil/mein-key.asc</code> <br/>
 								wieder importieren und mit<br/>
-								<code>gpg --send-keys &lt;fingerprint&gt;</code><br/>
+								<code>user@box:~$ gpg --send-keys &lt;fingerprint&gt;</code><br/>
 								an einen Keyserver schicken, k&ouml;nnen uns auch andere Menschen
 								finden. Alternativ (oder auch zus&auml;tzlich) kann man nat&uuml;rlich 
 								den &ouml;ffentlichen Teil auch auf seiner Homepage zum Download anbieten.
@@ -540,19 +554,26 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								f&uuml;r eine bestimmte Zeit in entsperrter Form vor und erspart uns so etwas Tipparbeit.
 							</p>
 
+							<p>
+								Die folgenden Vorgehensweisen funktionieren mit den Ger&auml;tesubkeys, die Nutzung
+								des Master-Keys ist (ausser wenn an diesen verschl&uuml;sselt wurde) nicht notwendig.
+							</p>
+
 							<h3>Signieren &amp; Verifizieren</h3>	
 							Um einen kryptographischen &quot;Beweis&quot; anzufertigen, dass wir Urheber eines bestimmten Dokumentes 
 							bzw. einer Datei sind und diese Datei auch zwischenzeitlich nicht ver&auml;ndert wurde, k&ouml;nnen 
-							wir mit GPG eine Signatur f&uuml;r eine Datei erzeugen:<br/>
-							<code>gpg --detach-sign &lt;filename&gt;</code><br/>
+							wir mit GPG eine Signatur f&uuml;r eine Datei erzeugen. Hierzu ben&ouml;tigen wir einen Signing-Key
+							dessen privaten Teil wir besitzen (e.g. unser ger&auml;tespezifischer Signing-Subkey) und f&uuml;hren 
+							dann folgenen Befehl aus:<br/>
+							<code>user@box:~$ gpg --detach-sign &lt;filename&gt;</code><br/>
 							GPG erzeugt nun eine bin&auml;re Signatur und speichert sie in der Datei &lt;filename&gt;.sig.<br/>
 							Um eine Signatur einer Datei auch in normalen Texten einbetten zu k&ouml;nnen, ist es meist sinnvoller,
 							die Signatur in einem ASCII-basierten Format ausgeben zu lassen. Dies erreichen wir mit<br/>
-							<code>gpg --armor --no-emit-version --detach-sign &lt;filename&gt;</code><br/>
+							<code>user@box:~$ gpg --armor --no-emit-version --detach-sign &lt;filename&gt;</code><br/>
 							Dieser Befehl erzeugt die Datei &lt;filename&gt;.asc, welche eine ASCII-Form der Signatur enth&auml;lt.<br/>
 							Ist die zu signierende Datei eine Textdatei, so kann die Signatur auch direkt an die Nachricht angeh&auml;ngt
 							werden. Dies geschieht mittels<br/>
-							<code>gpg --no-emit-version --clearsign &lt;filename&gt;</code><br/>
+							<code>user@box:~$ gpg --no-emit-version --clearsign &lt;filename&gt;</code><br/>
 							was wiederum die Datei &lt;filename&gt;.asc erzeugt, diesmal aber mit der Originaldatei gefolgt von
 							ihrer Signatur.
 
@@ -564,11 +585,29 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Um die Signatur einer Datei zu verifizieren, m&uuml;ssen wir den &ouml;ffentlichen Schl&uuml;ssel des
 							Schl&uuml;sselpaares besitzen, mit dem die Datei signiert wurde (beispielweise via Download von einem
 							Keyserver). Danach k&ouml;nnen wir mit einem<br/>
-							<code>gpg --verify &lt;filename&gt;.asc &lt;filename&gt;</code><br/>
+							<code>user@box:~$ gpg --verify &lt;filename&gt;.asc &lt;filename&gt;</code><br/>
 							&uuml;berpr&uuml;fen, ob die vorhandene Datei derjenigen entspricht, die urspr&uuml;nglich signiert wurde.
 
 							<h3>Verschl&uuml;sseln &amp; Entschl&uuml;sseln</h3>
+							Um eine Datei (oder eine Nachricht) an einen bestimmen Empf&auml;nger zu verschl&uuml;sseln,
+							ben&ouml;tigen wir dessen Public Key (Tats&auml;chlich ben&ouml;tigen wir dazu nicht einmal ein
+							eigenes Keypair). F&uuml;hren wir dann folgenden Befehl aus:<br/>
+							<code>
+								user@box:~$ gpg --recipient &lt;identifier&gt; --encrypt &lt;filename&gt;
+							</code>
+							<br/>
+							so erzeugt uns GPG die Datei &lt;filename&gt;.gpg, die dann nur von den angegebenen Empf&auml;ngern
+							dekodierbar ist.
+							Wir k&ouml;nnen auch mehreren Empf&auml;ngern das Entschl&uuml;sseln erm&ouml;glichen, indem
+							wir mehrmals <code>--recipient &lt;identifier&gt;</code> angeben (Es kann sinnvoll sein,
+							Dateien auch zus&auml;tzlich noch an sich selbst zu verschl&uuml;sseln).
+							//TODO --armor
+							//Symmetric
+							//Decryption
 
+							<h3>Beides auf einmal</h3>
+							Die beiden &quot;Betriebsarten&quot; von gpg lassen sich auch kombinieren - dazu
+							m&uuml;ssen wir einfach die jeweils passenden Argumente zusammen angeben ;)
 						</div>
 					</div>
 
@@ -620,14 +659,14 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									Wir exportieren jetzt noch unseren &ouml;ffentlichen Schl&uuml;ssel neu,
 									um die Ver&auml;nderung bekannt machen zu k&ouml;nnen.<br/>
-									<code>gpg --export --armor --no-emit-version <identifier> > /media/unsichererTeil/mein-key.asc</code><br/>
+									<code>user@box:~$ gpg --export --armor --no-emit-version <identifier> > /media/unsichererTeil/mein-key.asc</code><br/>
 								</li>
 								<li>
 									Jetzt k&ouml;nnen wir den &ouml;ffentlichen Schl&uuml;ssel auf einer
 									&quot;unsicheren&quot; Maschine wieder importieren und an die Keyserver senden.<br/>
 									<code>
-										gpg --import /media/unsichererTeil/mein-key.asc<br/>
-										gpg --send-keys &lt;identifier&gt;
+										user@box:~$ gpg --import /media/unsichererTeil/mein-key.asc<br/>
+										user@box:~$ gpg --send-keys &lt;identifier&gt;
 									</code>
 								</li>
 							</ol>
@@ -639,13 +678,13 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								wird es Zeit, das Revocation Certificate abzustauben.
 								Wenn wir die damals erzeugte Datei noch verf&uuml;gbar haben,
 								ist der Schritt recht einfach:<br/>
-								<code>gpg --import /media/meinSicheresMedium/master-pair.revcert</code><br/>
+								<code>user@box:~$ gpg --import /media/meinSicheresMedium/master-pair.revcert</code><br/>
 								Sollte dies nicht mehr der Fall sein, m&uuml;ssen wir die ausgedruckte
 								Version rauskramen, abtippen und dann genauso importieren.
 								Der Import des Revocation Certificates markiert das komplette Keypair als revoked. 
 								Um das nun auch noch der Welt mitzuteilen, sollten wir die Keyserver von der 
 								Ver&auml;nderung in Kenntnis setzen:<br/>
-								<code>gpg --send-keys &lt;identifier&gt;</code><br/>
+								<code>user@box:~$ gpg --send-keys &lt;identifier&gt;</code><br/>
 								Mit dem n&auml;chsten Update unseres Keys aus den Keyservern sind damit
 								die Benutzer in Kenntnis gesetzt, dass der Key zur&uuml;ckgerufen wurde.
 								Jetzt schnell ein neues Keypair erzeugen! ;)
