@@ -344,7 +344,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Damit unsere Schl&uuml;ssel nicht auf der Platte oder im
 										tempor&auml;ren Homeverzeichnis unseres Livesystems landen,
 										setzen wir mit <br/>
-										<code>user@box:~$ export GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
+										<code>user@box:~$ 
+											<span title="Setze Umgebungsvariable">export</span>
+											GNUPGHOME=/media/meinSicheresMedium/gpg_home</code>	
 										<br/>
 										eine Umgebungsvariable, die GPG anweist, seine Dateien auf unserem sicheren 
 										Medium zu speichern. Der Ordner sollte die Zugriffsmaske 700
@@ -381,8 +383,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										um einige Einstellungen vorzunehmen und weitere UIDs
 										hinzuzuf&uuml;gen.<br/>
 										<code>user@box:~$ gpg 
-											<span>--edit-key</span>
-											<span>&lt;identifier&gt;</span>
+											<span title="Starte Key-Bearbeitungs-Assistent">--edit-key</span>
+											<span title="Zu bearbeitender Key">&lt;identifier&gt;</span>
 										</code><br/>
 										&lt;identifier&gt; kann hierbei sein:
 										<ul>
@@ -392,7 +394,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										GPG pr&auml;sentiert uns nun sein interaktives Interface.
 										Wir f&uuml;hren darin folgenden Befehl aus, um die bevorzugten
 										Algorithmen etwas zu st&auml;rken:<br/>
-										<code>gpg&gt; setpref SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code>
+										<code>gpg&gt; 
+											<span title="Setze Algorithmenpr&auml;ferenzen">setpref</span>
+											SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code>
 										<br/>
 										GPG fragt uns nach der Passphrase, welche wir uns nat&uuml;rlich
 										mittlerweile auswendig gemerkt haben ;).
@@ -442,7 +446,14 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										Als n&auml;chstes werden wir das komplette Master-Keypair, inklusive
 										der Subkey-Secrets exportieren.<br/>
 										<code>
-											user@box:~$ gpg --export --armor --no-emit-version &lt;identifier&gt; &gt; /media/unsichererTeil/mein-key.asc<br/>
+											user@box:~$ gpg 
+												<span title="Exportieren eines Schl&uuml;ssels">--export</span>
+												<span title="Nutze textbasiertes Format">--armor</span>
+												<span title="Unterdr&uuml;cke die Versionsangabe">--no-emit-version</span> 
+												<span title="Zu exportierender Key">&lt;identifier&gt;</span> 
+												<span title="nach Datei schreiben">&gt;</span> 
+												<span title="Ausgabedatei">/media/unsichererTeil/mein-key.asc</span>
+												<br/>
 											user@box:~$ gpg --export-secret-keys --armor &lt;identifier&gt; &gt; /media/meinSicheresMedium/master.secret-key
 										</code>
 										<br/>
@@ -601,7 +612,13 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Wir k&ouml;nnen auch mehreren Empf&auml;ngern das Entschl&uuml;sseln erm&ouml;glichen, indem
 							wir mehrmals <code>--recipient &lt;identifier&gt;</code> angeben (Es kann sinnvoll sein,
 							Dateien auch zus&auml;tzlich noch an sich selbst zu verschl&uuml;sseln).
-							//TODO --armor
+							<p>
+								Die hierbei enstehenden Dateien sind Bin&auml;rdateien, und k&ouml;nnen daher nicht ohne
+								weiteres bspw. in Emails eingef&uuml;gt werden. Mit dem zus&auml;tzlichen Parameter
+								<code>--armor</code> weisen wir GPG an, die verschl&uuml;sselte Datei in einem textbasierten
+								Format zu speichern - es wird dann entsprechens die Datei &lt;filename&gt;.asc erzeugt.
+							</p>
+
 							//Symmetric
 							//Decryption
 
