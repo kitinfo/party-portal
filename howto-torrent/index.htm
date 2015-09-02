@@ -123,9 +123,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							Es empfiehlt sich, die zu verteilenden Dateien in benannte Ordner zu stecken und diese dann Auszuw&auml;hlen.
 							In das &quot;Trackers&quot;-Feld kommen, wie sicher schon erraten, die Adressen der Tracker, die du bestimmt schon
 							auf irgendwelchen Wegen mitgeteilt bekommen hast. Einen deskriptiven Kommentar einzutragen ist immer gern gesehen.
-							Sollte der Dialog die Option &quot;Private torrent&quot; anbieten, empfiehlt es sich den Haken zu setzen (verhindert die Weitergabe
-							der internen Adressen an externe Tracker und Peers im Internet - nicht zwingend schlimm, aber etwas nutzlos).
-							Die Option &quot;Power seeding&quot; bzw. &quot;Super seeding&quot; sollte jedoch ausgeschaltet werden, diese bringt nur bei einer asymmetrischen
+							Die Option &quot;Power seeding&quot; bzw. &quot;Super seeding&quot; sollte ausgeschaltet werden, diese bringt nur bei einer asymmetrischen
 							Anbindung an Peers Vorteile.
 							<br/><br/>
 							Der n&auml;chste Schritt des Clients wird nun eine, je nach Dateigr&ouml;&szlig;e variierend lange, Berechnung sein, in der
@@ -133,7 +131,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							<br/><br/>
 							Unter Linux lassen sich Torrentfiles recht einfach mit &quot;mktorrent&quot; erzeugen.<br />
 							<code>
-								mktorrent -v -a &lt;announce&gt; -p &lt;file or directory&gt;
+								mktorrent -v -a &lt;announce&gt; &lt;file or directory&gt;
 							</code><br/>
 							Folgendes Beispielskript akzeptiert auf stdin zeilenweise Dateien und Ordner und erzeugt dann im aktuellen Verzeichnis
 							die zugeh&ouml;rigen Torrentfiles:<br />
@@ -141,7 +139,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								#!/bin/sh<br/>
 								while read line; do<br/>
 								echo "Now hashing: $line"<br/>
-								mktorrent -v -a http://10.42.23.1:6969/announce -p "$line"<br/>
+								mktorrent -v -a http://10.42.23.1:6969/announce "$line"<br/>
 								done
 							</code><br/>
 							Aufruf beispielsweise mit<br/>
