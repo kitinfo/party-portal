@@ -231,29 +231,19 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					</div>
 
 					<div>
-						<h2>Wie erzeuge ich mein Keypair?</h2>
+						<h2>Vorbereitungen &amp; Notwendigkeiten</h2>
 						<p class="annotation">
 							Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG 
 							unter Linux-Systemen beschr&auml;nken. Ein bisschen Erfahrung mit der Kommandozeile 
 							muss leider auch vorausgesetzt werden, obwohl wir unser bestes tun werden, die 
 							Befehle zu erkl&auml;ren.
 						</p>
+						
 						<div class="section-padding">
-							Diese Anleitung versucht, ein m&ouml;glichst sicheres Schema
-							f&uuml;r die Benutzung einer Identit&auml;t auch auf mehreren
-							Ger&auml;ten zu beschreiben. Ein einfacher Schl&uuml;ssel ohne weitere
-							Sicherheitsvorkehrungen kann mit dem Befehl
-							<code>
-								gpg <span title="Starte Key-Erzeugungs-Assistent">--gen-key</span>
-							</code>
-							interaktiv erzeugt werden.
-							
-							<p>
-								F&uuml;r die Erstellung eines guten&trade; Schl&uuml;sselpaares empfiehlt es
-								sich, eine &quot;sichere&quot; Maschine zu benutzen - also ein System,
-								bei dem man davon ausgehen kann, dass es bisher &quot;&uuml;berwachungsfrei&quot; 
-								ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.
-							</p>
+							F&uuml;r die Erstellung eines guten&trade; Schl&uuml;sselpaares empfiehlt es
+							sich, eine &quot;sichere&quot; Maschine zu benutzen - also ein System,
+							bei dem man davon ausgehen kann, dass es bisher &quot;&uuml;berwachungsfrei&quot; 
+							ist und welches m&ouml;glichst wenig Angriffsfl&auml;che bietet.
 
 							<p>
 								Hierzu bieten sich einige M&ouml;glichkeiten:
@@ -281,22 +271,15 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								an &quot;unsicheren&quot; Systemen gemountet wird und einer, die dazu dient, Daten auf
 								&quot;potentiell sichere&quot; Systeme zu &uuml;bertragen) zu speichern.
 							</p>
-							<p>
-								Wir werden in dieser Anleitung ein Keypair mit mehreren
-								Subkeys (siehe oben) erzeugen - in unserem Fall mit einem
-								Encryption-Subkey (wer sich der Implikationen bewusst ist
-								kann auch gerne mehrere Encryption-Subkeys erzeugen) sowie
-								einem Signing-Subkey pro Ger&auml;t auf dem der Schl&uuml;ssel
-								verwendet werden soll.
-								<br/><br/>
 
-								Die einzelnen Ger&auml;te sollen dabei auch nur die geheimen
-								Teile ihrer jeweiligen Subkeys besitzen, sodass selbst
-								wenn eines der Ger&auml;te kompromittiert (verloren, &uuml;berwacht,
-								gel&ouml;scht) wird, der Besitzer mit dem Master-Keypair problemlos 
-								nur diesen einzelnen Subkey revoken kann und dabei nicht automatisch
-								das gesamte Keypair verliert oder die Sicherheit der anderen
-								Ger&auml;te aufs Spiel setzt.
+							<p>
+								Um ein solches sicheres Speichermedium zu erzeugen, empfiehlt sich die Verwendung eines neuen
+								USB-Sticks aus einer vertrauensw&uuml;rdigen Quelle (bspw. ein zuf&auml;llig ausgew&auml;hlter
+								Elektronikmarkt). Um zus&auml;tzlichen Schutz zum Beispiel bei Verlust zu schaffen, sollte mindestens
+								eine Partition auf diesem Medium verschl&uuml;sselt sein (zum Beispiel mit <a href="https://gitlab.com/cryptsetup/cryptsetup">LUKS</a>).
+								M&ouml;glicherweise kann die Einrichtung einer unverschluesselten Partition zum Transfer von bspw.
+								&Ouml;ffentlichen Schl&uuml;sseln sinnvoll sein, daf&uuml;r kann aber auch einfach ein weiterer
+								USB-Stick verwendet werden.
 							</p>
 
 							<p>
@@ -332,7 +315,78 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								diese Dateien im Homeverzeichnis zu haben, daher macht es Sinn
 								sich bspw. einen verschl&uuml;sselten USB-Stick zu bauen und
 								das Master-Keypair dort zu speichern.
+								Dazu legen wir auf dem sicheren Speichermedium einen Ordner names
+								<code>gpg_home</code> an, welchen wir sp&auml;ter an GPG als tempor&auml;res
+								Homeverzeichnis &uuml;bergeben.
 							</p>
+							
+							<p>
+								Innerhalb dieses Homeverzeichnisses kann auch die Konfiguration von GPG
+								angepasst werden, was uns die sp&auml;tere &Uuml;bergabe einiger Kommandozeilenparameter
+								erspart.
+								<br />
+								Hierzu legt man darin eine Datei namens <code>gpg.conf</code> an, in welcher
+								dann zeilenweise Optionen angegeben werden k&ouml;nnen.
+							</p>
+							
+							<p>
+								Beispielhaft seien hierbei folgende Optionen genannt
+								<ul>
+									<li>
+										<p>
+											<code>no-emit-version</code>
+										</p>
+										Keine Versions-/Programmkennzeichen in Ausgabetexte einbetten
+									</li>
+									<li>
+										<p>
+											<code>default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code>
+										</p>
+										Erspart uns das Setzen der Algorithmenpr&auml;ferenzliste &uuml;ber die Kommandozeile
+									</li>
+								</ul>
+							</p>
+						</div>
+						
+						
+					</div>
+
+					<div>
+						<h2>Wie erzeuge ich mein Keypair?</h2>
+						<p class="annotation">
+							Mangels Erfahrung mit Alternativen werden wir uns hier auf den Umgang mit GnuPG 
+							unter Linux-Systemen beschr&auml;nken. Ein bisschen Erfahrung mit der Kommandozeile 
+							muss leider auch vorausgesetzt werden, obwohl wir unser bestes tun werden, die 
+							Befehle zu erkl&auml;ren.
+						</p>
+						<div class="section-padding">
+							Diese Anleitung versucht, ein m&ouml;glichst sicheres Schema
+							f&uuml;r die Benutzung einer Identit&auml;t auch auf mehreren
+							Ger&auml;ten zu beschreiben. Ein einfacher Schl&uuml;ssel ohne weitere
+							Sicherheitsvorkehrungen kann mit dem Befehl
+							<code>
+								gpg <span title="Starte Key-Erzeugungs-Assistent">--gen-key</span>
+							</code>
+							interaktiv erzeugt werden.
+
+							<p>
+								Wir werden in dieser Anleitung ein Keypair mit mehreren
+								Subkeys (siehe oben) erzeugen - in unserem Fall mit einem
+								Encryption-Subkey (wer sich der Implikationen bewusst ist
+								kann auch gerne mehrere Encryption-Subkeys erzeugen) sowie
+								einem Signing-Subkey pro Ger&auml;t auf dem der Schl&uuml;ssel
+								verwendet werden soll.
+								<br/><br/>
+
+								Die einzelnen Ger&auml;te sollen dabei auch nur die geheimen
+								Teile ihrer jeweiligen Subkeys besitzen, sodass selbst
+								wenn eines der Ger&auml;te kompromittiert (verloren, &uuml;berwacht,
+								gel&ouml;scht) wird, der Besitzer mit dem Master-Keypair problemlos 
+								nur diesen einzelnen Subkey revoken kann und dabei nicht automatisch
+								das gesamte Keypair verliert oder die Sicherheit der anderen
+								Ger&auml;te aufs Spiel setzt.
+							</p>
+
 							<p>
 								Damit kommen wir auch schon zum Hauptteil. Die nachfolgenden
 								Schritte sollten nacheinander auf dem vorher erw&auml;hnten
@@ -393,7 +447,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										</ul>
 										GPG pr&auml;sentiert uns nun sein interaktives Interface.
 										Wir f&uuml;hren darin folgenden Befehl aus, um die bevorzugten
-										Algorithmen etwas zu st&auml;rken:<br/>
+										Algorithmen etwas zu st&auml;rken (dieser Schritt kann ausgelassen werden, falls
+										die Pr&auml;ferenzen bereits wie oben in <code>gpg.conf</code> gesetzt wurde):<br/>
 										<code>gpg&gt; 
 											<span title="Setze Algorithmenpr&auml;ferenzen">setpref</span>
 											SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed</code>
@@ -753,6 +808,9 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								</li>
 								<li>
 									<a href="https://wiki.debian.org/Subkeys">Debian Wiki: GPG Subkeys</a>
+								</li>
+								<li>
+									<a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions#2-setup">Die LUKS-FAQ zum erstellen eines verschl&uuml;sselten Speichermediums</a>
 								</li>
 							</ul>
 						</div>
