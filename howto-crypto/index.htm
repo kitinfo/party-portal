@@ -662,8 +662,8 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								user@box:~$ gpg --recipient &lt;identifier&gt; --encrypt &lt;filename&gt;
 							</code>
 							<br/>
-							so erzeugt uns GPG die Datei &lt;filename&gt;.gpg, die dann nur von den angegebenen Empf&auml;ngern
-							dekodierbar ist.
+							so erzeugt uns GPG die Datei <code>&lt;filename&gt;.gpg</code>, die dann nur von den angegebenen
+							Empf&auml;ngern dekodierbar ist.
 							Wir k&ouml;nnen auch mehreren Empf&auml;ngern das Entschl&uuml;sseln erm&ouml;glichen, indem
 							wir mehrmals <code>--recipient &lt;identifier&gt;</code> angeben (Es kann sinnvoll sein,
 							Dateien auch zus&auml;tzlich noch an sich selbst zu verschl&uuml;sseln).
@@ -671,14 +671,35 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Die hierbei enstehenden Dateien sind Bin&auml;rdateien, und k&ouml;nnen daher nicht ohne
 								weiteres bspw. in Emails eingef&uuml;gt werden. Mit dem zus&auml;tzlichen Parameter
 								<code>--armor</code> weisen wir GPG an, die verschl&uuml;sselte Datei in einem textbasierten
-								Format zu speichern - es wird dann entsprechens die Datei &lt;filename&gt;.asc erzeugt.
+								Format zu speichern - es wird dann entsprechend die Datei <code>&lt;filename&gt;.asc</code> erzeugt.
+								Das kodieren der Bin&auml;rdaten als Text (intern indirekt <a href="https://en.wikipedia.org/wiki/Base64">
+								Base64</a>) f&uuml;hrt dazu, dass das Resultat ein wenig mehr Speicher als die bin&auml;r
+								kodierte Variante ben&ouml;tigt.
 							</p>
 
-							//Symmetric
-							//Decryption
+							GPG kann auch f&uuml;r symmetrische Verschl&uuml;sselung verwendet werden - hierbei ben&ouml;tigt man dann
+							einen bereits vorher ausgetauschten Schl&uuml;ssel, der allen kommunizierenden Parteien bekannt ist - 
+							daher der Name "symmetrisch".
+
+							<p>
+								Um eine Datei symmetrisch zu verschl&uuml;sseln, setzen wir folgenden Befehl ein: <br/>
+								<code>
+										user@box:~$ gpg --symmetric &lt;filename&gt;
+								</code>
+								<br/>
+								GPG erfragt dann den zu verwendenden Schl&uuml;ssel von uns, inklusive einer Wiederholung zur Sicherheit.
+								Wenn gewollt kann mit der Option <code>--cipher-algo &lt;algorithmus&gt;</code> der zu verwendende symmetrische
+								Algorithmus angegeben werden. Die symmetrische Verschl&uuml;sselung azeptiert auch die <code>--armor</code>-Option zur Ausgabe
+								von ASCII-kodiertem Text. Auch die Entschl&uuml;sselung der entstehenden Dateien funktioniert mit demselben
+								Befehl wie f&uuml;r asymmetrisch verschl&uuml;sselte Dateien.
+							</p>
+
+							Die beiden Verschl&uuml;sselungsmodi lassen sich clever kombinieren indem man beispielsweise den Schl&uuml;sselaustausch
+							mittels asymmentrischer Verschl&uuml;sselung durchf&uuml;hrt, den eigentlichen Nachrichtenaustausch aber
+							mit symmetrischer.
 
 							<h3>Beides auf einmal</h3>
-							Die beiden &quot;Betriebsarten&quot; von gpg lassen sich auch kombinieren - dazu
+							Die beiden &quot;Betriebsarten&quot; von GPG (Signieren und Verschl&uuml;sseln) lassen sich auch kombinieren - dazu
 							m&uuml;ssen wir einfach die jeweils passenden Argumente zusammen angeben ;)
 						</div>
 					</div>
