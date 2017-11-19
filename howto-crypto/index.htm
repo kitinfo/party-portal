@@ -344,6 +344,12 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 										</p>
 										Erspart uns das Setzen der Algorithmenpr&auml;ferenzliste &uuml;ber die Kommandozeile
 									</li>
+									<li>
+										<p>
+											<code>ask-cert-level</code>
+										</p>
+										Beim signieren eines Schl&uuml;ssels nach der Vertrauensstufe fragen
+									</li>
 								</ul>
 							</p>
 						</div>
@@ -707,12 +713,216 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 					<div>
 						<h2>Wie funktioniert das Web of Trust?</h2>
 						<div class="section-padding">
-							//signingpolicy
-							//list-keys, etc
-							//list sigs etc
+							Das Web of Trust ist die andere grosse Komponente von GPG, die abgesehen von kryptographischen Aspekten zur Sicherheit des
+							Gesamtsystems beitr&auml;gt. Das Web of Trust besteht aus &quot;Bezeugungen&quot; durch individuelle Key-Inhaber, dass ein
+							anderer Key-Inhaber derjenige ist, der aus der Key-UID (bspw. durch Name, Foto, etc) hervorgeht. Hierzu wird normalerweise
+							die Vorlage eines legalen Ausweisdokumentes verlangt, um die Identit&auml;t gegenpr&uuml;fen zu k&ouml;nnen.
+							Danach <em>signiert</em> der Pr&uuml;fende die UIDs am Schl&uuml;ssel des zu pr&uuml;fenden, was eine Bezeugung der Identit&auml;t
+							durch diesen Schl&uuml;ssel darstellt. Die entstehenden Signaturen werden dann ver&ouml;ffentlicht, was zum namensgebenden
+							Netz an gegenseitigen Vertrauensbezeugungen f&uuml;hrt.
+							
+							<p>
+								Als dritter Teilnehmer n&uuml;tzt mit dieses Netz insofern, als ich diesen Vertrauenspfaden folgen kann, um die Identit&auml;t
+								eines Key-Inhabers welchen ich pers&ouml;nlich nicht verifizieren kann (bspw. weil er auf der anderen Seite der Welt wohnt)
+								mit relativer Sicherheit festzustellen. M&ouml;chte ich beispielsweise sicherstellen, dass ein Key <em>D</em> auch zu Person
+								<em>D</em> geh&ouml;rt (was zum Beispiel zum Beginn einer asymmetrisch verschl&uuml;sselten Kommunikation wichtig ist),
+								versuche ich einen Pfad entlang der Schl&uuml;sselsignaturen von mit bis zu meinem Ziel zu finden. Finde ich einen solchen,
+								ist die Wahrscheinlichkeit, dass eine dritte Person diesen Schl&uuml;ssel gef&auml;lscht hat, sehr gering. Finde ich
+								<em>keinen</em> Pfad, heisst dies aber im Umkehrschluss nicht, dass diese Person nicht die ist, f&uuml;r die sie sich ausgibt.
+								Diese Fragestellung ist eines der zentralen Probleme moderner Kommunikation.
+							</p>
+
+							Die meisten Teilnehmer am Web of Trust h&auml;ngen an ihren Schl&uuml;ssel eine Information an (bspw. &uuml;ber das Kommentarfeld einer UID),
+							welche ihre <em>Signing Policy</em> beschreibt. Dieses Dokument spezifiziert, unter welchen Umst&auml;nden und mit welchen Identit&auml;tsbeweisen
+							sie eine Signatur zu einem Key beitragen.
+							Da die Identit&auml;t eines Kommunikationspartners (zb. in f&uuml;r investigative Journalisten) teils auch von
+							lebenswichtiger Bedeutung sein kann, werden die wenigsten Teilnehmer einen Key signieren, dessen Eigent&uuml;er sie nicht kennen.
+							Anfragen per E-Mail sind daher meist nutzlos. Eine gute Grundlage f&uuml;r eine Signing Policy bilden zum Beispiel
+							<ul>
+								<li>Eine f&auml;lschungssichere Repr&auml;sentation des Schl&uuml;ssels</li>
+								<li>Ein g&uuml;ltiger Identit&auml;tsbeweis (Personalausweis, etc)</li>
+								<li>Pers&ouml;nliche &Uuml;bergabe</li>
+							</ul>
+
+							Einige Personen m&ouml;chten selbst entscheiden, welche Signaturen f&uuml;r ihren Schl&uuml;ssel sie ver&ouml;ffentlichen m&ouml;chten.
+							Aus H&ouml;flichtkeit stellt man neue Signaturen den Schl&uuml;sselinhabern daher privat zur Verf&uuml;gung, statt sie ungefragt auf
+							einem Keyserver zu ver&ouml;ffentlichen.
+
+							<p>
+								Eine gute Vorlage f&uuml;r eine Papier-Repr&auml;sentation eines eigenen Schl&uuml;ssels erh&auml;lt man beispielsweise durch das
+								Tool <a href="https://github.com/rogers0/pgp-tools/blob/master/gpg-key2ps/gpg-key2ps"><code>gpg-key2ps</code></a>. Dabei sollte man
+								aber stets darauf achten, diese Zettel nicht aus den Augen zu lassen - jemand k&ouml;nnte sie gegen welche mit einem gef&auml;lschten
+								Key austauschen.
+							</p>
+
+							<h3>Signaturen abholen &amp; anzeigen</h3>
+							Sollte jemand unseren Key signiert haben und die resultierende Signatur direkt auf einem Keyserver ver&ouml;ffentlich haben, k&ouml;nnen
+							wir mit dem Befehl<br/>
+							<code>
+								user@box:~$ gpg --keyserver &lt;server&gt; --recv-keys &lt;identifier&gt;
+							</code>
+							<br/>
+							den aktuellen Status unseres Keys von einem Keyserver abholen. Die Keyserver synchronisieren sich untereinander mit ein wenig Versatz, es kann
+							also ein bisschen dauern bis die Signaturen auf unserem Lieblingskeyserver verf&uuml;gbar sind. Mit diesem Befehl k&ouml;nnen wir auch beliebige
+							Keys von anderen Personen (bspw. Personen deren Key wir selbst signieren wollen) von den Servern abrufen. Diese &ouml;ffentlichen Schl&uuml;ssel
+							werden dann in unseren lokalen Keyring kopiert und sind dort auch offline verf&uuml;gbar. Eine gute &Uuml;bersicht &uuml;ber aktive
+							Keyserver findet sich bei <a href="https://sks-keyservers.net/">sks-keyservers</a>.
+							
+							<p>
+								Manche Key-Inhaber m&ouml;chten ihre Schl&uuml;ssel aus diversen Gr&uuml;nden nicht auf Keyservern ver&ouml;ffentlichen, sondern
+								versenden bspw. auf Anfrage ihre Schl&uuml;ssel als einzelne Dateien. Um diese Dateien zu importieren, verwenden wir den folgenden
+								Befehl:<br />
+								<code>
+									user@box:~$ gpg --import &lt;datei.gpg&gt;
+								</code>
+								<br/>
+								M&ouml;glicherweise ist die Datei verschl&uuml;sselt. Sollte dies der Fall sein m&uuml;ssen wir sie nat&uuml;rlich
+								vorher entschl&uuml;sseln.
+							</p>
+
+							Die aktuell in unserem Keyring vorhandenen Schl&uuml;ssel werden mit folgendem Befehl angezeigt:<br/>
+							<code>
+								user@box:~$ gpg --list-keys
+							</code>
+							<br/>
+							Analog lassen sich mit folgendem Befehl alle Signaturen an bestimmten Schl&uuml;sseln anzeigen:<br/>
+							<code>
+								user@box:~$ gpg --list-sigs &lt;identifier&gt;
+							</code>
+							<br/>
+
+							<h3>Wie signiere ich einen Schl&uuml;ssel</h3>
+							Prinzipiell signiert man beim Web of Trust eigentlich keine ganzen Schl&uuml;ssel (wohl aber <em>mit</em> einem Schl&uuml;ssel), sondern
+							einzelne UIDs. Dabei existieren verschiedene &quot;Vertrauensgrade&quot;, welche optional verwendet werden k&ouml;nnen um bspw. die
+							Sorgfalt der Verifikation zu zeigen. Die individuelle Bedeutung der Levels wird oft in der Signing Policy genauer beschrieben, die
+							Beispielangaben durch GPG sind:
+							<ul>
+								<li>
+									<strong>Level 0</strong>
+									Keine Aussage. Dies ist der Standard wenn die Angabe von Vertrauensgraden nicht aktiviert ist.
+								</li>
+								<li>
+									<strong>Level 1</strong>
+									Keine Identit&auml;tspr&uuml;fung vorgenommen, aber wir glauben dass der Key dem Benutzer geh&ouml;rt.
+									Kann beispielsweise f&uuml;r pseudonyme Keys verwendet werden.
+								</li>
+								<li>
+									<strong>Level 2</strong>
+									Grundlegende Identit&auml;ts&uuml;berpr&uuml;fung, bspw durch Vergleich des Fotos einer UID und Verifikation
+									des Key-Fingerprints.
+								</li>
+								<li>
+									<strong>Level 3</strong>
+									Intensive Identit&auml;ts&uuml;berpr&uuml;fung, bspw durch pers&ouml;nliche Verifikation mit Ausweisdokumenten,
+									etc.
+								</li>
+							</ul>
+
+							Um einen Schl&uuml;ssel zu signieren, m&uuml;ssen wir ihn erst einmal, wie oben beschrieben, importieren (bspw von einem Keyserver oder
+							aus einer Datei). Signiert wird immer mit dem private-Teil des Master-Keys, also ben&ouml;tigen wir diesen auf der Maschine, auf der wir
+							die Signatur machen wollen.
+
+							<p>
+								Um nun die eigentliche Signatur vorzunehmen, starten wir die bearbeitung des zu signierenden Keys mit<br/>
+								<code>
+									user@box:~$ gpg --ask-cert-level --edit-key &lt;identifier&gt;
+								</code>
+								<br/>
+								Die Option <code>--ask-cert-level</code> aktiviert dabei die detaillierte Abfrage des Vertrauensgrades.
+								Danach selektieren wir die UID, welche wir signieren wollen und starten den Signatur-Assistenten mit<br/>
+								<code>
+									gpg&gt; uid &lt;nummer&gt;<br/>
+									gpg&gt; sign
+								</code>
+								<br/>
+								Nachdem der Assistent seine Abfragen beendet hat, kann man den Prozess f&uuml;r andere UIDs wiederholen, oder
+								den Key mit der neuen Signatur mittels <code>save</code> in den lokalen Keyring speichern.
+							</p>
+
+							<h3>Schl&uuml;ssel und Signaturen ver&ouml;ffentlichen</h3>
+							Um die Informationen und Signaturen aus dem lokalen Keyring an einen Keyserver zu &uuml;bertragen, wird folgender Befehl verwendet:<br/>
+							<code>
+								user@box:~$ gpg --keyserver &lt;keyserver&gt; --send-keys &lt;identifier&gt;
+							</code>
+							<br/>
+							Es ist dabei nicht n&ouml;tig, den Key an mehrere Keyserver zu &uuml;bertragen, da diese sich untereinander synchronisieren.
+							Aus H&ouml;flichkeit sollte darauf geachtet werden, dass nicht jeder begeistert ist, ungefragt neue Signaturen an seinem Key auf
+							den Keyservern zu finden. Prinzipiell ist ein gutes vorgehen, neue Signaturen an den Keys anderer einzeln zu exportieren und diese ihnen dann,
+							sinnvollerweise in verschl&uuml;sselter Form, zukommen zu lassen. Dies l&auml;sst ihnen die Option, selbst zu entscheiden welche Signaturen
+							sie ver&ouml;ffentlichen. Ausserdem ist das hochladen der Signaturen dann ein weiterer Beweis daf&uuml;r, dass der Empf&auml;nger diesen Key
+							und die dazugeh&ouml;rigen UIDs auch kontrolliert und abruft.
+
+							<p>
+								Der Prozess, eine einzelne Signatur zu exportieren, wird bei GPG leider sehr erschwert. Prinzipiell muessen daf&uuml;r folgende
+								Schritte durchgef&uuml;hrt werden:
+								<ol>
+									<li>
+										<strong>Importieren des Keys aus beliebiger Quelle</strong><br/>
+										Dabei werden auch bisherige Signaturen am Key mit importiert.
+									</li>
+									<li>
+										<strong>Minimieren des Keys</strong><br/>
+										Hierbei werden die bisher existierenden Signaturen des Keys vom lokalen Keyring gel&ouml;scht.
+										Dazu &ouml;ffnet man den zu bearbeitenden Schl&uuml;ssel mittels<br/>
+										<code>
+											user@box:~$ gpg --edit-key &lt;identifier&gt;
+										</code>
+										<br/>
+										und gibt dann nacheinander die Befehle <code>minimize</code> und <code>save</code> ein.
+									</li>
+									<li>
+										<strong>Signieren einer (oder aller) UIDs des Keys</strong><br/>
+										Siehe vorherige Sektion.
+									</li>
+									<li>
+										<strong>Exportieren des Keys</strong>
+										Nach dem signieren kann der Schl&uuml;ssel aus dem lokalen Keyring mittels folgendem Befehl
+										in eine Datei exportiert werden:<br/>
+										<code>
+											user@box:~$ gpg --export --armor &lt;identifier&gt; <strong>&gt;</strong> &lt;dateiname&gt;
+										</code>
+										<br/>
+										Idealerweise verschl&uuml;sselt man diese Datei dann auch noch an den Eigent&uuml;mer des Keys
+										mittels:<br/>
+										<code>
+											user@box:~$ gpg --armor --encrypt --recipient &lt;identifier&gt; &lt;dateiname&gt;
+										</code>
+										<br/>
+
+										<p>
+											Sollen die Signaturen einzelner UIDs in einzelne Dateien exportiert werden, muss
+											nach dem Signieren einer UID und dem Export dieser Signatur der Key nochmals
+											minimiert (also die gerade gemachte Signatur entfernt) werden.
+										</p>
+									</li>
+								</ol>
+								Dieser Prozess kann durch automatisierte Tools vereinfacht werden, n&auml;heres dazu findet sich in einer sp&auml;teren Sektion.
+							</p>
+
+							<h3>Signaturen importieren</h3>
+							Sollten wir von einem anderen Benutzer eine Email mit einer neuen Signatur f&uuml;r unseren Schl&uuml;ssel bekommen haben, k&ouml;nnen
+							wir diese mit demselben Import-Befehl den wir f&uuml;r ganze Keys benutzen importieren:<br/>
+							<code>
+								user@box:~$ gpg --import &lt;datei.gpg&gt;
+							</code>
+							<br/>
+							Dies liegt daran, dass jede Einzel-Signatur prinzipiell eine Kopie des &Ouml;ffentlichen Schl&uuml;ssels mit genau dieser einen
+							Signatur ist. Beim importieren f&uuml;gt GPG dann die Information aus der Datei mit den im lokalen Keyring vorhandenen Signaturen
+							zusammen. Dies geschieht allerdings erst einmal nur lokal, wir m&uuml;ssen die neue Signatur danach also noch wie in der vorherigen
+							Sektion beschrieben ver&ouml;ffentlichen.
+
+							<h3>Automatisierung</h3>
+							Wie man merkt, sind die diversen Prozesse des Web of Trust eigentlich immer dieselbe Abfolge. Daher gibt es mehrere Tools, die diesen Prozess
+							auf mehr oder weniger aufw&auml;ndige Weise automatisieren. F&uuml;r Personen, die Erfahrung mit der Administration von Linux-Systemen haben
+							und bspw. einen lokalen Mailausgangsserver betreiben, bietet sich <a href="https://wiki.debian.org/caff">caff</a> an, welches die resultierenden
+							Signaturen gleich verschl&uuml;sselt via Email an die Empf&auml;nger &uuml;bermittelt. Auf airgapped-Maschinen m&ouml;chte man nat&uuml;rlich
+							m&ouml;glichst wenig externen Code ausf&uuml;hren, um die Angriffsfl&auml;che zu minimieren. Hier gibt es beispielsweise
+							<a href="https://github.com/cbdevnet/signet">signet</a>, welches &auml;hnliche Funktionalit&auml;ten wie caff bietet, aber in bash geschrieben
+							und auf Offline-Systeme ausgerichtet ist.
+							<p>
+							</p>
 						</div>
 					</div>
-
 
 					<div>
 						<h2>Was tun, wenn der Schl&uuml;ssel kompromittiert wurde?</h2>
@@ -752,7 +962,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									Wir exportieren jetzt noch unseren &ouml;ffentlichen Schl&uuml;ssel neu,
 									um die Ver&auml;nderung bekannt machen zu k&ouml;nnen.<br/>
-									<code>user@box:~$ gpg --export --armor --no-emit-version <identifier> > /media/unsichererTeil/mein-key.asc</code><br/>
+									<code>user@box:~$ gpg --export --armor --no-emit-version &gt;identifier&lt; > /media/unsichererTeil/mein-key.asc</code><br/>
 								</li>
 								<li>
 									Jetzt k&ouml;nnen wir den &ouml;ffentlichen Schl&uuml;ssel auf einer
