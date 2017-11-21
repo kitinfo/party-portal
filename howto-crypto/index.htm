@@ -755,6 +755,10 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Key austauschen.
 							</p>
 
+							Eine gute Gelegenheit, viele (auch gut verbundene) Signaturen f&uuml;r seinen Key zu bekommen stellen so genannte Key-Signing-Parties dar.
+							Hier treffen sich mehrere Personen und tauschen untereinander Signaturen nach den beschriebenen Kriterien aus. Auch Linux-Dsitributionen und
+							Open-Source-Projekte veranstalten oft solche Events, da ein grossteil ihrer Kommunikationsinfrastruktur auf dem Web of Trust beruht.
+
 							<h3>Signaturen abholen &amp; anzeigen</h3>
 							Sollte jemand unseren Key signiert haben und die resultierende Signatur direkt auf einem Keyserver ver&ouml;ffentlich haben, k&ouml;nnen
 							wir mit dem Befehl<br/>
@@ -823,7 +827,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 							die Signatur machen wollen.
 
 							<p>
-								Um nun die eigentliche Signatur vorzunehmen, starten wir die bearbeitung des zu signierenden Keys mit<br/>
+								Um nun die eigentliche Signatur vorzunehmen, starten wir die Bearbeitung des zu signierenden Keys mit<br/>
 								<code>
 									user@box:~$ gpg --ask-cert-level --edit-key &lt;identifier&gt;
 								</code>
@@ -838,6 +842,11 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								Nachdem der Assistent seine Abfragen beendet hat, kann man den Prozess f&uuml;r andere UIDs wiederholen, oder
 								den Key mit der neuen Signatur mittels <code>save</code> in den lokalen Keyring speichern.
 							</p>
+
+							Alternativ k&ouml;nnen mit folgendem Befehl alle UIDs auf einmal signiert werden:<br/>
+							<code>
+								user@box:~$ gpg --ask-cert-level --sign-key &lt;identifier&gt;
+							</code>
 
 							<h3>Schl&uuml;ssel und Signaturen ver&ouml;ffentlichen</h3>
 							Um die Informationen und Signaturen aus dem lokalen Keyring an einen Keyserver zu &uuml;bertragen, wird folgender Befehl verwendet:<br/>
