@@ -744,6 +744,15 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>Pers&ouml;nliche &Uuml;bergabe</li>
 							</ul>
 
+							<p>
+							Da die weitgehende Umgangssprache im Internet Englisch ist, sind auch die meisten Signing Policies auf Englisch verfasst.
+							Wir haben eine <a href="example-policy.md">Beispiel-Signing-Policy</a> verfasst, die dazu gedacht ist, sie auf eigene Bed&uuml;rfnisse
+							anzupassen. Um aus dem Dokument beispielsweise eine HTML-Seite zu generieren, die auf einer eigenen Homepage eingebunden (und von dort
+							als Signing-Policy auf dem Key angegeben werden kann), kann Markdown verwendet werden. Um die G&uuml;ltigkeit der Policy f&uuml;r einen
+							Key zu demonstrieren, empfiehlt es sich, die angepasste Policy mit dem Key f&uuml;r den sie gelten soll zu signieren und diese Signatur
+							dann auch zur Verf&uuml;gung zu stellen.
+							</p>
+
 							Einige Personen m&ouml;chten selbst entscheiden, welche Signaturen f&uuml;r ihren Schl&uuml;ssel sie ver&ouml;ffentlichen m&ouml;chten.
 							Aus H&ouml;flichtkeit stellt man neue Signaturen den Schl&uuml;sselinhabern daher privat zur Verf&uuml;gung, statt sie ungefragt auf
 							einem Keyserver zu ver&ouml;ffentlichen.
@@ -804,11 +813,12 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									<strong>Level 0</strong>
 									Keine Aussage. Dies ist der Standard wenn die Angabe von Vertrauensgraden nicht aktiviert ist.
+									Kann auch sonst beispielsweise f&uuml;r pseudonyme Keys verwendet werden.
 								</li>
 								<li>
 									<strong>Level 1</strong>
 									Keine Identit&auml;tspr&uuml;fung vorgenommen, aber wir glauben dass der Key dem Benutzer geh&ouml;rt.
-									Kann beispielsweise f&uuml;r pseudonyme Keys verwendet werden.
+									Die meisten Teilnehmer am Web of Trust raten von der Verwendung dieses Levels ab.
 								</li>
 								<li>
 									<strong>Level 2</strong>
@@ -971,7 +981,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 								<li>
 									Wir exportieren jetzt noch unseren &ouml;ffentlichen Schl&uuml;ssel neu,
 									um die Ver&auml;nderung bekannt machen zu k&ouml;nnen.<br/>
-									<code>user@box:~$ gpg --export --armor --no-emit-version &gt;identifier&lt; > /media/unsichererTeil/mein-key.asc</code><br/>
+									<code>user@box:~$ gpg --export --armor --no-emit-version &lt;identifier&gt; &gt; /media/unsichererTeil/mein-key.asc</code><br/>
 								</li>
 								<li>
 									Jetzt k&ouml;nnen wir den &ouml;ffentlichen Schl&uuml;ssel auf einer
